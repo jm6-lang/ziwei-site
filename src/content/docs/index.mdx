@@ -1,40 +1,35 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
-template: splash # Remove or comment out this line to display the site sidebar on this page.
+title: Zi Wei Dou Shu Guide
+description: The complete guide to Chinese astrology - Zi Wei Dou Shu (紫微斗数)
+template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  title: Zi Wei Dou Shu Guide
+  tagline: Discover the ancient wisdom of Chinese astrology. Learn how to read your destiny and understand the cosmic energies that shape your life.
   image:
     file: ../../assets/houston.webp
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Start Learning
+      link: /guides/what-is-zi-wei/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+      variant: primary
+    - text: Explore the Stars
+      link: /stars/overview/
       icon: external
-      variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
-
-<CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
-	</Card>
-	<Card title="Change page layout" icon="document">
-		Delete `template: splash` in `src/content/docs/index.mdx` to display a
-		sidebar on this page.
-	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
-	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
-	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
-	</Card>
+<CardGrid>
+  <Card title="What is Zi Wei Dou Shu?" icon="seti:file-text">
+    Learn about the ancient Chinese art of destiny reading, also known as Purple Star Astrology.
+  </Card>
+  <Card title="The 14 Main Stars" icon="seti:puzzle">
+    Discover the 14 celestial stars that form the foundation of your destiny chart.
+  </Card>
+  <Card title="The 12 Palaces" icon="seti:layout">
+    Understand the 12 life palaces and what they reveal about different aspects of your life.
+  </Card>
+  <Card title="Case Studies" icon="seti:search">
+    Explore real-life examples and learn how to apply Zi Wei Dou Shu analysis.
+  </Card>
 </CardGrid>
