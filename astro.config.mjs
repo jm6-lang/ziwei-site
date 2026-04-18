@@ -8,9 +8,7 @@ export default defineConfig({
 		starlight({
 			title: 'Zi Wei Dou Shu Guide',
 			description: 'The complete guide to Chinese astrology - Zi Wei Dou Shu (紫微斗数)',
-			logo: {
-				src: './src/assets/logo.png',
-			},
+
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/jm6-lang/ziwei-site' },
 			],
