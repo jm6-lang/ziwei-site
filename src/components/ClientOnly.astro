@@ -1,0 +1,13 @@
+---
+// ClientOnly 组件：确保内容只在客户端渲染
+const { default: slot } = Astro.props;
+---
+
+<slot />
+
+<script is:inline>
+  // 这个脚本确保组件只在客户端执行
+  if (typeof window === 'undefined') {
+    throw new Error('ClientOnly component must be rendered on client side');
+  }
+</script>
