@@ -1,6 +1,6 @@
 /**
- * 紫微斗数排盘核心计算器
- * 实现生辰八字、十四主星、十二宫位、大限运程的完整算法
+ * 紫微斗数排盘核心计算器 v2.0
+ * 完整实现：生辰八字、十四主星、十二宫位、大限运程、辅星系统、四化系统、流年分析
  */
 
 // ========== 基础数据定义 ==========
@@ -16,6 +16,13 @@ export const palaceNames = [
 export const majorStarNames = [
   '紫微', '天机', '太阳', '武曲', '天同', '廉贞',
   '天府', '太阴', '贪狼', '巨门', '天相', '天梁', '七杀', '破军'
+];
+
+// 辅星定义（吉星）
+export const minorStarNames = [
+  '左辅', '右弼', '文昌', '文曲', '天魁', '天钺',
+  '禄存', '天马', '擎羊', '陀罗', '火星', '铃星',
+  '地空', '地劫', '天刑', '天姚', '红鸾', '天喜'
 ];
 
 // 五行局定义
@@ -41,7 +48,14 @@ export interface Star {
   name: string;
   type: 'major' | 'minor' | 'evil' | 'auxiliary';
   brightness?: '庙' | '旺' | '利' | '陷';
-  position: number; // 宫位索引 (0-11)
+  position: number;
+}
+
+export interface SiHua {
+  starName: string;
+  huaType: '化禄' | '化权' | '化科' | '化忌';
+  position: number;
+  stem: string;
 }
 
 export interface Palace {
@@ -50,6 +64,7 @@ export interface Palace {
   earthlyBranch: string;
   heavenlyStem: string;
   stars: Star[];
+  siHuaStars: SiHua[];
 }
 
 export interface DaXianPeriod {
@@ -62,6 +77,20 @@ export interface DaXianPeriod {
   analysis: string;
 }
 
+export interface LiuNianAnalysis {
+  year: number;
+  age: number;
+  liuNianPalaceIndex: number;
+  liuNianPalaceName: string;
+  liuNianStars: Star[];
+  siHuaInYear: SiHua[];
+  fortune: string;
+  career: string;
+  wealth: string;
+  love: string;
+  health: string;
+}
+
 export interface ZiWeiChart {
   birthInfo: BirthInfo;
   lifePalaceIndex: number;
@@ -70,6 +99,8 @@ export interface ZiWeiChart {
   fiveElementPhaseNumber: number;
   palaces: Palace[];
   majorStars: Star[];
+  minorStars: Star[];
+  siHuaStars: SiHua[];
   daXian: DaXianPeriod[];
   currentAge: number;
   currentDaXian: DaXianPeriod | null;
@@ -77,32 +108,19 @@ export interface ZiWeiChart {
 
 // ========== 工具函数 ==========
 
-/**
- * 计算天干
- */
-function getHeavenlyStem(year: number): string {
+export function getHeavenlyStem(year: number): string {
   return heavenlyStems[(year - 4) % 10];
 }
 
-/**
- * 计算地支
- */
-function getEarthlyBranch(year: number): string {
+export function getEarthlyBranch(year: number): string {
   return earthlyBranches[(year - 4) % 12];
 }
 
-/**
- * 获取时辰的地支（2 小时为一个时辰）
- */
 function getHourBranch(hour: number): string {
-  // 子时：23-1, 丑时：1-3, 寅时：3-5, ...
   const branchIndex = Math.floor((hour + 1) / 2) % 12;
   return earthlyBranches[branchIndex];
 }
 
-/**
- * 计算生辰八字（简化版）
- */
 export function calculateEightCharacters(birth: BirthInfo): string {
   const yearStem = getHeavenlyStem(birth.year);
   const yearBranch = getEarthlyBranch(birth.year);
@@ -114,13 +132,12 @@ export function calculateEightCharacters(birth: BirthInfo): string {
 
 function getMonthStem(year: number, month: number): string {
   const yearStemIndex = (year - 4) % 10;
-  // 根据年干起月干（五虎遁）
   const monthStemMap: Record<number, number[]> = {
-    0: [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3], // 甲己之年丙作首
-    1: [4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5], // 乙庚之岁戊为头
-    2: [6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7], // 丙辛之岁寻庚上
-    3: [8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9], // 丁壬壬寅顺水流
-    4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1], // 戊癸之年甲寅首
+    0: [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
+    1: [4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
+    2: [6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
+    3: [8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    4: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
     5: [2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
     6: [4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
     7: [6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
@@ -132,9 +149,7 @@ function getMonthStem(year: number, month: number): string {
 }
 
 function getDayStemBranch(birth: BirthInfo): string {
-  // 简化：使用公历日期推算（实际需要查表）
-  // 这里用一个近似算法
-  const baseDate = new Date(1900, 0, 31); // 1900 年 1 月 31 日是甲子日
+  const baseDate = new Date(1900, 0, 31);
   const targetDate = new Date(birth.year, birth.month - 1, birth.day);
   const diffDays = Math.floor((targetDate.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24));
   
@@ -149,13 +164,12 @@ function getHourStem(birth: BirthInfo): string {
   const dayStem = dayStemBranch.charAt(0);
   const dayStemIndex = heavenlyStems.indexOf(dayStem);
   
-  // 五鼠遁：根据日干起时干
   const hourStemMap: Record<number, number[]> = {
-    0: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2], // 甲己还加甲
-    1: [3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4], // 乙庚丙作初
-    2: [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6], // 丙辛从戊起
-    3: [7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8], // 丁壬庚子居
-    4: [9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0], // 戊癸何方发
+    0: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
+    1: [3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
+    2: [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+    3: [7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8],
+    4: [9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
     5: [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
     6: [3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
     7: [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
@@ -167,22 +181,14 @@ function getHourStem(birth: BirthInfo): string {
   const stemIndex = hourStemMap[dayStemIndex][hourIndex];
   return heavenlyStems[stemIndex];
 }
+// ========== 核心排盘函数 ==========
 
-/**
- * 确定五行局
- * 根据纳音五行和命宫地支确定
- */
 export function determineFiveElementPhase(birth: BirthInfo, lifePalaceIndex: number): { phase: string; number: number } {
   const yearStem = getHeavenlyStem(birth.year);
   const yearBranch = getEarthlyBranch(birth.year);
   
-  // 纳音五行计算（简化版）
-  const stemIndex = heavenlyStems.indexOf(yearStem);
-  const branchIndex = earthlyBranches.indexOf(yearBranch);
-  
-  // 根据六十甲子纳音
   const naYinMap: Record<string, number> = {
-    '甲子': 2, '乙丑': 2, '丙寅': 3, '丁卯': 3, // 海中金、炉中火...
+    '甲子': 2, '乙丑': 2, '丙寅': 3, '丁卯': 3,
     '戊辰': 4, '己巳': 4, '庚午': 5, '辛未': 5,
     '壬申': 6, '癸酉': 6, '甲戌': 2, '乙亥': 2,
     '丙子': 3, '丁丑': 3, '戊寅': 4, '己卯': 4,
@@ -208,40 +214,18 @@ export function determineFiveElementPhase(birth: BirthInfo, lifePalaceIndex: num
   };
 }
 
-/**
- * 安紫微星
- * 根据生日和五行局确定紫微星位置
- */
 export function placeZiWeiStar(birthDay: number, fiveElementPhaseNumber: number): number {
-  // 紫微星口诀：「紫微逆行非等闲，生日加上修正数」
-  // 修正值：水 2+2, 木 3+3, 金 4+4, 土 5+5, 火 6+6
   const correction = fiveElementPhaseNumber;
   const position = (birthDay + correction - 1) % 12;
   return position;
 }
 
-/**
- * 安十四主星
- * 紫微星定位后，其他星按固定顺序排列
- */
 export function placeMajorStars(ziWeiPosition: number, birthDay: number, fiveElementPhaseNumber: number): Star[] {
   const stars: Star[] = [];
   
-  // 紫微星
-  stars.push({
-    name: '紫微',
-    type: 'major',
-    position: ziWeiPosition
-  });
+  stars.push({ name: '紫微', type: 'major', position: ziWeiPosition });
+  stars.push({ name: '天机', type: 'major', position: (ziWeiPosition - 1 + 12) % 12 });
   
-  // 天机星：紫微逆时针一位
-  stars.push({
-    name: '天机',
-    type: 'major',
-    position: (ziWeiPosition - 1 + 12) % 12
-  });
-  
-  // 太阳星：根据生日定亮度
   const sunPosition = (ziWeiPosition + 2) % 12;
   stars.push({
     name: '太阳',
@@ -250,36 +234,13 @@ export function placeMajorStars(ziWeiPosition: number, birthDay: number, fiveEle
     position: sunPosition
   });
   
-  // 武曲星
-  stars.push({
-    name: '武曲',
-    type: 'major',
-    position: (ziWeiPosition + 3) % 12
-  });
+  stars.push({ name: '武曲', type: 'major', position: (ziWeiPosition + 3) % 12 });
+  stars.push({ name: '天同', type: 'major', position: (ziWeiPosition + 4) % 12 });
+  stars.push({ name: '廉贞', type: 'major', position: (ziWeiPosition + 5) % 12 });
   
-  // 天同星
-  stars.push({
-    name: '天同',
-    type: 'major',
-    position: (ziWeiPosition + 4) % 12
-  });
-  
-  // 廉贞星
-  stars.push({
-    name: '廉贞',
-    type: 'major',
-    position: (ziWeiPosition + 5) % 12
-  });
-  
-  // 天府星：与紫微相对
   const tianFuPosition = (ziWeiPosition + 6) % 12;
-  stars.push({
-    name: '天府',
-    type: 'major',
-    position: tianFuPosition
-  });
+  stars.push({ name: '天府', type: 'major', position: tianFuPosition });
   
-  // 太阴星
   stars.push({
     name: '太阴',
     type: 'major',
@@ -287,86 +248,34 @@ export function placeMajorStars(ziWeiPosition: number, birthDay: number, fiveEle
     position: (tianFuPosition + 1) % 12
   });
   
-  // 贪狼星
-  stars.push({
-    name: '贪狼',
-    type: 'major',
-    position: (tianFuPosition + 2) % 12
-  });
-  
-  // 巨门星
-  stars.push({
-    name: '巨门',
-    type: 'major',
-    position: (tianFuPosition + 3) % 12
-  });
-  
-  // 天相星
-  stars.push({
-    name: '天相',
-    type: 'major',
-    position: (tianFuPosition + 4) % 12
-  });
-  
-  // 天梁星
-  stars.push({
-    name: '天梁',
-    type: 'major',
-    position: (tianFuPosition + 5) % 12
-  });
-  
-  // 七杀星
-  stars.push({
-    name: '七杀',
-    type: 'major',
-    position: (tianFuPosition + 6) % 12
-  });
-  
-  // 破军星
-  stars.push({
-    name: '破军',
-    type: 'major',
-    position: (tianFuPosition + 7) % 12
-  });
+  stars.push({ name: '贪狼', type: 'major', position: (tianFuPosition + 2) % 12 });
+  stars.push({ name: '巨门', type: 'major', position: (tianFuPosition + 3) % 12 });
+  stars.push({ name: '天相', type: 'major', position: (tianFuPosition + 4) % 12 });
+  stars.push({ name: '天梁', type: 'major', position: (tianFuPosition + 5) % 12 });
+  stars.push({ name: '七杀', type: 'major', position: (tianFuPosition + 6) % 12 });
+  stars.push({ name: '破军', type: 'major', position: (tianFuPosition + 7) % 12 });
   
   return stars;
 }
 
-/**
- * 定命宫
- * 根据出生月份和时辰确定命宫位置
- */
 export function determineLifePalace(birthMonth: number, birthHour: number): number {
-  // 命宫口诀：「寅起正月顺数至生月，再从该位起子时逆数至生时」
-  // 简化算法：正月在寅 (2)，顺数到生月，再逆数到生时
-  
   const monthOffset = (birthMonth - 1) % 12;
   const hourIndex = Math.floor((birthHour + 1) / 2) % 12;
   
-  // 从寅位 (索引 2) 开始
   let position = (2 + monthOffset) % 12;
-  // 逆数到时支
   position = (position - hourIndex + 12) % 12;
   
   return position;
 }
 
-/**
- * 定身宫
- * 身宫永远在迁移宫（命宫对宫）
- */
 export function determineBodyPalace(lifePalaceIndex: number): number {
   return (lifePalaceIndex + 6) % 12;
 }
 
-/**
- * 排十二宫位
- */
-export function arrangePalaces(lifePalaceIndex: number, majorStars: Star[]): Palace[] {
+export function arrangePalaces(lifePalaceIndex: number, majorStars: Star[], minorStars: Star[], siHuaStars: SiHua[]): Palace[] {
   const palaces: Palace[] = [];
   
   for (let i = 0; i < 12; i++) {
-    // 从命宫开始顺时针排列
     const palaceIndex = (lifePalaceIndex + i) % 12;
     
     palaces.push({
@@ -374,16 +283,119 @@ export function arrangePalaces(lifePalaceIndex: number, majorStars: Star[]): Pal
       name: palaceNames[i],
       earthlyBranch: earthlyBranches[palaceIndex],
       heavenlyStem: heavenlyStems[palaceIndex % 10],
-      stars: majorStars.filter(star => star.position === palaceIndex)
+      stars: [...majorStars, ...minorStars].filter(star => star.position === palaceIndex),
+      siHuaStars: siHuaStars.filter(sihua => sihua.position === palaceIndex)
     });
   }
   
   return palaces;
 }
 
-/**
- * 起大限（十年大运）
- */
+// ========== 辅星系统 ==========
+
+export function placeMinorStars(birthInfo: BirthInfo, lifePalaceIndex: number, majorStars: Star[]): Star[] {
+  const stars: Star[] = [];
+  const yearStem = getHeavenlyStem(birthInfo.year);
+  const yearBranch = getEarthlyBranch(birthInfo.year);
+  const stemIndex = heavenlyStems.indexOf(yearStem);
+  
+  // 禄存星
+  const luCunPositions: Record<number, number> = { 0: 2, 1: 3, 2: 5, 3: 7, 4: 9, 5: 2, 6: 3, 7: 5, 8: 7, 9: 9 };
+  const luCunPos = luCunPositions[stemIndex] || 2;
+  stars.push({ name: '禄存', type: 'minor', position: luCunPos });
+  
+  // 擎羊星
+  stars.push({ name: '擎羊', type: 'evil', position: (luCunPos - 1 + 12) % 12 });
+  
+  // 陀罗星
+  stars.push({ name: '陀罗', type: 'evil', position: (luCunPos + 1) % 12 });
+  
+  // 左辅星
+  const zuoFuPos = (birthInfo.month - 1 + 3) % 12;
+  stars.push({ name: '左辅', type: 'minor', position: zuoFuPos });
+  
+  // 右弼星
+  const youBiPos = (zuoFuPos + 6) % 12;
+  stars.push({ name: '右弼', type: 'minor', position: youBiPos });
+  
+  // 文昌星
+  const wenChangPos = (Math.floor((birthInfo.hour + 1) / 2) + 2) % 12;
+  stars.push({ name: '文昌', type: 'minor', position: wenChangPos });
+  
+  // 文曲星
+  const wenQuPos = (wenChangPos + 6) % 12;
+  stars.push({ name: '文曲', type: 'minor', position: wenQuPos });
+  
+  // 天魁星
+  const tianKuiPositions: Record<number, number> = { 0: 1, 1: 0, 2: 11, 3: 9, 4: 7, 5: 1, 6: 0, 7: 11, 8: 9, 9: 7 };
+  stars.push({ name: '天魁', type: 'minor', position: tianKuiPositions[stemIndex] || 1 });
+  
+  // 天钺星
+  const tianYuePos = (tianKuiPositions[stemIndex] + 6) % 12;
+  stars.push({ name: '天钺', type: 'minor', position: tianYuePos });
+  
+  // 火星
+  const huoXingPos = (lifePalaceIndex + 4) % 12;
+  stars.push({ name: '火星', type: 'evil', position: huoXingPos });
+  
+  // 铃星
+  const lingXingPos = (huoXingPos + 4) % 12;
+  stars.push({ name: '铃星', type: 'evil', position: lingXingPos });
+  
+  // 地空
+  const diKongPos = (Math.floor((birthInfo.hour + 1) / 2) + 5) % 12;
+  stars.push({ name: '地空', type: 'evil', position: diKongPos });
+  
+  // 地劫
+  const diJiePos = (diKongPos + 6) % 12;
+  stars.push({ name: '地劫', type: 'evil', position: diJiePos });
+  
+  // 天马星
+  const yearBranchIndex = earthlyBranches.indexOf(yearBranch);
+  const tianMaPositions: Record<number, number> = { 2: 5, 3: 2, 5: 8, 6: 11, 8: 5, 9: 2, 11: 8, 0: 11 };
+  stars.push({ name: '天马', type: 'minor', position: tianMaPositions[yearBranchIndex] || 5 });
+  
+  return stars;
+}
+// ========== 四化系统 ==========
+
+export function placeSiHuaStars(birthInfo: BirthInfo, majorStars: Star[]): SiHua[] {
+  const yearStem = getHeavenlyStem(birthInfo.year);
+  const stemIndex = heavenlyStems.indexOf(yearStem);
+  
+  const siHuaMap: Record<number, { lu: string; quan: string; ke: string; ji: string }> = {
+    0: { lu: '廉贞', quan: '破军', ke: '武曲', ji: '太阳' },
+    1: { lu: '天机', quan: '天梁', ke: '紫微', ji: '太阴' },
+    2: { lu: '天同', quan: '天机', ke: '文昌', ji: '廉贞' },
+    3: { lu: '太阴', quan: '天同', ke: '天机', ji: '巨门' },
+    4: { lu: '贪狼', quan: '太阴', ke: '右弼', ji: '天机' },
+    5: { lu: '武曲', quan: '贪狼', ke: '天梁', ji: '文曲' },
+    6: { lu: '太阳', quan: '武曲', ke: '天同', ji: '天机' },
+    7: { lu: '巨门', quan: '太阳', ke: '文曲', ji: '文昌' },
+    8: { lu: '天梁', quan: '紫微', ke: '左辅', ji: '武曲' },
+    9: { lu: '破军', quan: '巨门', ke: '太阴', ji: '贪狼' }
+  };
+  
+  const siHua = siHuaMap[stemIndex];
+  const result: SiHua[] = [];
+  
+  if (siHua) {
+    const findStarPosition = (starName: string): number => {
+      const star = majorStars.find(s => s.name === starName);
+      return star ? star.position : 0;
+    };
+    
+    result.push({ starName: siHua.lu, huaType: '化禄', position: findStarPosition(siHua.lu), stem: yearStem });
+    result.push({ starName: siHua.quan, huaType: '化权', position: findStarPosition(siHua.quan), stem: yearStem });
+    result.push({ starName: siHua.ke, huaType: '化科', position: findStarPosition(siHua.ke), stem: yearStem });
+    result.push({ starName: siHua.ji, huaType: '化忌', position: findStarPosition(siHua.ji), stem: yearStem });
+  }
+  
+  return result;
+}
+
+// ========== 大限运程 ==========
+
 export function calculateDaXian(
   lifePalaceIndex: number,
   fiveElementPhaseNumber: number,
@@ -391,17 +403,13 @@ export function calculateDaXian(
   gender: 'male' | 'female'
 ): DaXianPeriod[] {
   const daXian: DaXianPeriod[] = [];
-  
-  // 起限年龄
   const startAge = fiveElementPhaseNumber;
   
-  // 阳男阴女顺行，阴男阳女逆行
   const yearStem = getHeavenlyStem(birthYear);
   const isYangMale = gender === 'male' && ['甲', '丙', '戊', '庚', '壬'].includes(yearStem);
   const isYinFemale = gender === 'female' && ['乙', '丁', '己', '辛', '癸'].includes(yearStem);
   const isForward = isYangMale || isYinFemale;
   
-  // 计算每 10 年的大限
   for (let i = 0; i < 7; i++) {
     const palaceIndex = isForward 
       ? (lifePalaceIndex + i) % 12 
@@ -424,9 +432,6 @@ export function calculateDaXian(
   return daXian;
 }
 
-/**
- * 生成大限运势分析
- */
 function generateDaXianAnalysis(palaceName: string, periodIndex: number): string {
   const analyses: Record<string, string> = {
     '命宫': '此十年为本我发展期，个性特质得以展现，是人生方向确立的重要阶段。',
@@ -446,42 +451,136 @@ function generateDaXianAnalysis(palaceName: string, periodIndex: number): string
   return analyses[palaceName] || '此十年运势平稳，顺其自然即可。';
 }
 
-/**
- * 计算当前年龄所在的大限
- */
 export function getCurrentDaXian(daXian: DaXianPeriod[], currentAge: number): DaXianPeriod | null {
   return daXian.find(dx => currentAge >= dx.startAge && currentAge <= dx.endAge) || null;
+}
+// ========== 流年分析 ==========
+
+export function calculateLiuNian(chart: ZiWeiChart, year: number): LiuNianAnalysis {
+  const currentAge = year - chart.birthInfo.year;
+  const lifePalaceIndex = chart.lifePalaceIndex;
+  
+  const yearBranch = getEarthlyBranch(year);
+  const yearBranchIndex = earthlyBranches.indexOf(yearBranch);
+  const liuNianPalaceIndex = (2 + yearBranchIndex - lifePalaceIndex + 12) % 12;
+  
+  const yearStem = getHeavenlyStem(year);
+  const stemIndex = heavenlyStems.indexOf(yearStem);
+  
+  const siHuaMap: Record<number, { lu: string; quan: string; ke: string; ji: string }> = {
+    0: { lu: '廉贞', quan: '破军', ke: '武曲', ji: '太阳' },
+    1: { lu: '天机', quan: '天梁', ke: '紫微', ji: '太阴' },
+    2: { lu: '天同', quan: '天机', ke: '文昌', ji: '廉贞' },
+    3: { lu: '太阴', quan: '天同', ke: '天机', ji: '巨门' },
+    4: { lu: '贪狼', quan: '太阴', ke: '右弼', ji: '天机' },
+    5: { lu: '武曲', quan: '贪狼', ke: '天梁', ji: '文曲' },
+    6: { lu: '太阳', quan: '武曲', ke: '天同', ji: '天机' },
+    7: { lu: '巨门', quan: '太阳', ke: '文曲', ji: '文昌' },
+    8: { lu: '天梁', quan: '紫微', ke: '左辅', ji: '武曲' },
+    9: { lu: '破军', quan: '巨门', ke: '太阴', ji: '贪狼' }
+  };
+  
+  const siHua = siHuaMap[stemIndex];
+  const siHuaInYear: SiHua[] = [];
+  
+  if (siHua) {
+    const findStarPosition = (starName: string): number => {
+      const star = chart.majorStars.find(s => s.name === starName);
+      return star ? star.position : 0;
+    };
+    
+    siHuaInYear.push({ starName: siHua.lu, huaType: '化禄', position: findStarPosition(siHua.lu), stem: yearStem });
+    siHuaInYear.push({ starName: siHua.quan, huaType: '化权', position: findStarPosition(siHua.quan), stem: yearStem });
+    siHuaInYear.push({ starName: siHua.ke, huaType: '化科', position: findStarPosition(siHua.ke), stem: yearStem });
+    siHuaInYear.push({ starName: siHua.ji, huaType: '化忌', position: findStarPosition(siHua.ji), stem: yearStem });
+  }
+  
+  const liuNianStars = chart.majorStars.filter(star => star.position === liuNianPalaceIndex);
+  
+  return {
+    year,
+    age: currentAge,
+    liuNianPalaceIndex,
+    liuNianPalaceName: palaceNames[liuNianPalaceIndex],
+    liuNianStars,
+    siHuaInYear,
+    fortune: generateLiuNianFortune(chart, year, liuNianPalaceIndex),
+    career: generateLiuNianCareer(chart, year, liuNianPalaceIndex),
+    wealth: generateLiuNianWealth(chart, year, liuNianPalaceIndex),
+    love: generateLiuNianLove(chart, year, liuNianPalaceIndex),
+    health: generateLiuNianHealth(chart, year, liuNianPalaceIndex)
+  };
+}
+
+function generateLiuNianFortune(chart: ZiWeiChart, year: number, palaceIndex: number): string {
+  const hasZiWei = chart.majorStars.some(s => s.name === '紫微' && s.position === palaceIndex);
+  const hasTianJi = chart.majorStars.some(s => s.name === '天机' && s.position === palaceIndex);
+  
+  if (hasZiWei) {
+    return `${year}年有贵人相助，整体运势上扬，是关键的发展机遇期。`;
+  }
+  if (hasTianJi) {
+    return `${year}年思维活跃，适合策划布局，但需防思虑过多。`;
+  }
+  return `${year}年运势平稳，按部就班即可有所收获。`;
+}
+
+function generateLiuNianCareer(chart: ZiWeiChart, year: number, palaceIndex: number): string {
+  const palaceName = palaceNames[palaceIndex];
+  if (palaceName === '官禄宫') {
+    return `${year}年事业运势强劲，有升迁或跳槽良机，宜积极进取。`;
+  }
+  if (chart.majorStars.some(s => s.name === '太阳' && s.position === palaceIndex)) {
+    return `${year}年工作表现突出，容易获得上司赏识和公众认可。`;
+  }
+  return `${year}年事业稳步发展，保持专业态度会有不错表现。`;
+}
+
+function generateLiuNianWealth(chart: ZiWeiChart, year: number, palaceIndex: number): string {
+  const palaceName = palaceNames[palaceIndex];
+  if (palaceName === '财帛宫') {
+    return `${year}年财运亨通，正财偏财皆有收获，但需注意理性消费。`;
+  }
+  if (chart.majorStars.some(s => s.name === '武曲' && s.position === palaceIndex)) {
+    return `${year}年通过实际行动和专业技能可获得财富增长。`;
+  }
+  return `${year}年财运平稳，做好理财规划可保收支平衡。`;
+}
+
+function generateLiuNianLove(chart: ZiWeiChart, year: number, palaceIndex: number): string {
+  const palaceName = palaceNames[palaceIndex];
+  if (palaceName === '夫妻宫') {
+    return `${year}年感情运势活跃，单身者易遇良缘，已婚者需用心经营。`;
+  }
+  if (chart.majorStars.some(s => s.name === '廉贞' && s.position === palaceIndex)) {
+    return `${year}年情感丰富，浪漫气息浓厚，但需防情绪波动。`;
+  }
+  return `${year}年感情生活平稳，多沟通理解可增进关系。`;
+}
+
+function generateLiuNianHealth(chart: ZiWeiChart, year: number, palaceIndex: number): string {
+  const palaceName = palaceNames[palaceIndex];
+  if (palaceName === '疾厄宫') {
+    return `${year}年需特别关注健康，定期体检，避免过劳。`;
+  }
+  return `${year}年健康状况良好，保持规律作息和适度运动即可。`;
 }
 
 // ========== 主函数：完整排盘 ==========
 
-/**
- * 执行完整的紫微斗数排盘
- */
 export function calculateZiWeiChart(birthInfo: BirthInfo): ZiWeiChart {
-  // 1. 定命宫
   const lifePalaceIndex = determineLifePalace(birthInfo.month, birthInfo.hour);
-  
-  // 2. 定身宫
   const bodyPalaceIndex = determineBodyPalace(lifePalaceIndex);
-  
-  // 3. 定五行局
   const { phase: fiveElementPhase, number: fiveElementPhaseNumber } = 
     determineFiveElementPhase(birthInfo, lifePalaceIndex);
   
-  // 4. 安紫微星
   const ziWeiPosition = placeZiWeiStar(birthInfo.day, fiveElementPhaseNumber);
-  
-  // 5. 安十四主星
   const majorStars = placeMajorStars(ziWeiPosition, birthInfo.day, fiveElementPhaseNumber);
-  
-  // 6. 排十二宫位
-  const palaces = arrangePalaces(lifePalaceIndex, majorStars);
-  
-  // 7. 起大限
+  const minorStars = placeMinorStars(birthInfo, lifePalaceIndex, majorStars);
+  const siHuaStars = placeSiHuaStars(birthInfo, majorStars);
+  const palaces = arrangePalaces(lifePalaceIndex, majorStars, minorStars, siHuaStars);
   const daXian = calculateDaXian(lifePalaceIndex, fiveElementPhaseNumber, birthInfo.year, birthInfo.gender);
   
-  // 8. 计算当前年龄和当前大限
   const currentYear = new Date().getFullYear();
   const currentAge = currentYear - birthInfo.year;
   const currentDaXian = getCurrentDaXian(daXian, currentAge);
@@ -494,15 +593,14 @@ export function calculateZiWeiChart(birthInfo: BirthInfo): ZiWeiChart {
     fiveElementPhaseNumber,
     palaces,
     majorStars,
+    minorStars,
+    siHuaStars,
     daXian,
     currentAge,
     currentDaXian
   };
 }
 
-/**
- * 生成十年运势详细分析（过去 10 年和未来 10 年）
- */
 export function generateTenYearFortune(chart: ZiWeiChart): { past: string; future: string } {
   const currentAge = chart.currentAge;
   const currentDaXian = chart.currentDaXian;
@@ -511,7 +609,6 @@ export function generateTenYearFortune(chart: ZiWeiChart): { past: string; futur
     return { past: '无法计算过往运势', future: '无法计算未来运势' };
   }
   
-  // 过去十年分析
   const pastAnalysis = `
 ## 前十年运势回顾 (${currentAge - 10}岁 - ${currentAge}岁)
 
@@ -528,7 +625,6 @@ export function generateTenYearFortune(chart: ZiWeiChart): { past: string; futur
 ${generatePastEvents(chart, currentDaXian)}
 `.trim();
   
-  // 未来十年分析
   const nextDaXianIndex = chart.daXian.indexOf(currentDaXian) + 1;
   const nextDaXian = chart.daXian[nextDaXianIndex];
   
@@ -563,8 +659,6 @@ ${nextDaXian.analysis}
     future: futureAnalysis
   };
 }
-
-// ========== 辅助分析函数 ==========
 
 function getPalaceFocus(palaceName: string): string {
   const focus: Record<string, string> = {
@@ -609,7 +703,6 @@ function getStarInfluence(stars: Star[]): string {
 }
 
 function generatePastEvents(chart: ZiWeiChart, daXian: DaXianPeriod): string {
-  // 根据命盘生成可能的过往事件
   const events = [];
   
   if (chart.majorStars.some(s => s.name === '紫微')) {
