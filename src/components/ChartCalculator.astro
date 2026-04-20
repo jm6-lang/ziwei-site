@@ -1,0 +1,660 @@
+---
+// ChartCalculator.astro - 紫微斗数排盘计算器（完整版：农历+三宫四正+飞宫四化）
+---
+
+<div class="chart-calc-wrapper">
+  <div class="chart-calc">
+    <div class="calc-header">
+      <div class="calc-icon">✦</div>
+      <h3>紫微斗数排盘</h3>
+      <span class="solar-note">支持阳历/农历输入</span>
+    </div>
+
+    <div class="calc-fields">
+      <div class="calc-row">
+        <div class="calc-group">
+          <label>历法类型</label>
+          <select id="calc-calendar">
+            <option value="solar">阳历（公历）</option>
+            <option value="lunar">农历（阴历）</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="calc-row">
+        <div class="calc-group">
+          <label for="calc-year">出生年份</label>
+          <input type="number" id="calc-year" placeholder="例：1991" min="1900" max="2030" />
+        </div>
+        <div class="calc-group">
+          <label for="calc-month">月份</label>
+          <input type="number" id="calc-month" placeholder="1–12" min="1" max="12" />
+        </div>
+        <div class="calc-group">
+          <label for="calc-day">日期</label>
+          <input type="number" id="calc-day" placeholder="1–30" min="1" max="30" />
+        </div>
+      </div>
+
+      <div class="calc-row">
+        <div class="calc-group">
+          <label for="calc-hour">出生时辰</label>
+          <select id="calc-hour">
+            <option value="">请选择时辰</option>
+            <option value="0">子时 23:00–01:00</option>
+            <option value="1">丑时 01:00–03:00</option>
+            <option value="2">寅时 03:00–05:00</option>
+            <option value="3">卯时 05:00–07:00</option>
+            <option value="4">辰时 07:00–09:00</option>
+            <option value="5">巳时 09:00–11:00</option>
+            <option value="6">午时 11:00–13:00</option>
+            <option value="7">未时 13:00–15:00</option>
+            <option value="8">申时 15:00–17:00</option>
+            <option value="9">酉时 17:00–19:00</option>
+            <option value="10">戌时 19:00–21:00</option>
+            <option value="11">亥时 21:00–23:00</option>
+          </select>
+        </div>
+        <div class="calc-group">
+          <label for="calc-gender">性别</label>
+          <select id="calc-gender">
+            <option value="">请选择</option>
+            <option value="male">男</option>
+            <option value="female">女</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="calc-action">
+      <button id="calc-btn">⭐ 生成命盘分析</button>
+      <p id="calc-msg"></p>
+    </div>
+
+    <div id="calc-result">
+      <div class="result-divider">◆ 命盘结果 ◆</div>
+
+      <div class="result-block">
+        <h4>命盘总览</h4>
+        <div id="calc-summary"></div>
+      </div>
+
+      <div class="result-block">
+        <h4>生年四化（本命盘）</h4>
+        <div id="calc-sihua"></div>
+      </div>
+
+      <div class="result-block">
+        <h4>十二宫命盘图</h4>
+        <div id="calc-chart"></div>
+      </div>
+
+      <div class="result-block">
+        <h4>大运流年</h4>
+        <div id="calc-dayun"></div>
+      </div>
+
+      <div class="result-block">
+        <h4>过去五年事件回溯</h4>
+        <div id="calc-past"></div>
+      </div>
+
+      <div class="result-block">
+        <h4>未来五年事件预测</h4>
+        <div id="calc-future"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ===== 基础数据 =====
+  const DI_ZHI = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+  const TIAN_GAN = ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸'];
+  const PALACE_NAMES = ['命宫','兄弟宫','夫妻宫','子女宫','财帛宫','疾厄宫','迁移宫','仆役宫','官禄宫','田宅宫','福德宫','父母宫'];
+  
+  // 四化表
+  const SI_HUA = {
+    '甲': { lu: '廉贞', quan: '破军', ke: '武曲', ji: '太阳' },
+    '乙': { lu: '天机', quan: '天梁', ke: '紫微', ji: '太阴' },
+    '丙': { lu: '天同', quan: '天机', ke: '文昌', ji: '廉贞' },
+    '丁': { lu: '太阴', quan: '天同', ke: '天机', ji: '巨门' },
+    '戊': { lu: '贪狼', quan: '太阴', ke: '右弼', ji: '天机' },
+    '己': { lu: '武曲', quan: '贪狼', ke: '天梁', ji: '文曲' },
+    '庚': { lu: '太阳', quan: '武曲', ke: '太阴', ji: '天同' },
+    '辛': { lu: '巨门', quan: '太阳', ke: '文曲', ji: '文昌' },
+    '壬': { lu: '天梁', quan: '紫微', ke: '左辅', ji: '武曲' },
+    '癸': { lu: '破军', quan: '巨门', ke: '太阴', ji: '贪狼' }
+  };
+
+  // 五行局
+  const JU_TABLE = { '甲': 4, '乙': 3, '丙': 2, '丁': 2, '戊': 6, '己': 6, '庚': 5, '辛': 5, '壬': 3, '癸': 4 };
+  const JU_NAMES = { 2: '水二局', 3: '木三局', 4: '金四局', 5: '土五局', 6: '火六局' };
+
+  // 宫位天干表（五虎遁）
+  const PALACE_GAN_TABLE = {
+    '甲': ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸','甲','乙'],
+    '乙': ['丙','丁','戊','己','庚','辛','壬','癸','甲','乙','丙','丁'],
+    '丙': ['戊','己','庚','辛','壬','癸','甲','乙','丙','丁','戊','己'],
+    '丁': ['庚','辛','壬','癸','甲','乙','丙','丁','戊','己','庚','辛'],
+    '戊': ['壬','癸','甲','乙','丙','丁','戊','己','庚','辛','壬','癸'],
+    '己': ['甲','乙','丙','丁','戊','己','庚','辛','壬','癸','甲','乙'],
+    '庚': ['丙','丁','戊','己','庚','辛','壬','癸','甲','乙','丙','丁'],
+    '辛': ['戊','己','庚','辛','壬','癸','甲','乙','丙','丁','戊','己'],
+    '壬': ['庚','辛','壬','癸','甲','乙','丙','丁','戊','己','庚','辛'],
+    '癸': ['壬','癸','甲','乙','丙','丁','戊','己','庚','辛','壬','癸']
+  };
+
+  // ===== 详细事件库 =====
+  const DETAILED_EVENTS = {
+    // 化禄入宫的详细事件
+    '化禄': {
+      '命宫': {
+        events: ['获得贵人提携', '个人能力得到认可', '人际关系明显改善', '有新的发展机遇'],
+        detail: '化禄入命宫，主该年个人运势上升，贵人运旺，做事顺遂，容易得到他人的帮助和支持。'
+      },
+      '兄弟宫': {
+        events: ['兄弟姐妹有喜事', '朋友运极佳', '有合作项目机会', '手足情谊加深'],
+        detail: '化禄入兄弟宫，主该年与兄弟姐妹、朋友关系融洽，有合作共赢的机会。'
+      },
+      '夫妻宫': {
+        events: ['感情运势上升', '有桃花运出现', '婚姻关系和谐', '配偶事业有成'],
+        detail: '化禄入夫妻宫，主该年感情运势极佳，单身者有桃花机会，已婚者婚姻美满。'
+      },
+      '子女宫': {
+        events: ['子女学业进步', '有添丁之喜', '子女身体健康', '与子女关系融洽'],
+        detail: '化禄入子女宫，主该年子女运佳，有喜事或添丁之喜，子女健康快乐。'
+      },
+      '财帛宫': {
+        events: ['正财收入增加', '有意外横财', '投资理财获利', '理财机会增多'],
+        detail: '化禄入财帛宫，主该年财运亨通，正财偏财皆旺，适合投资理财。'
+      },
+      '疾厄宫': {
+        events: ['身体健康好转', '病痛逐渐康复', '精神状态良好', '养生有效果'],
+        detail: '化禄入疾厄宫，主该年身体状况改善，若有旧疾也逐渐好转。'
+      },
+      '迁移宫': {
+        events: ['外出发展顺利', '有贵人相助', '出行有收获', '在外名声好'],
+        detail: '化禄入迁移宫，主该年外出运佳，在外有贵人相助，适合出差、旅游或外地发展。'
+      },
+      '仆役宫': {
+        events: ['朋友运极佳', '有贵人相助', '下属得力能干', '社交活动增多'],
+        detail: '化禄入仆役宫，主该年交友运旺，有贵人相助，下属配合度高。'
+      },
+      '官禄宫': {
+        events: ['事业运势上升', '有升职加薪机会', '工作得到认可', '有重要项目'],
+        detail: '化禄入官禄宫，主该年事业运势极佳，有升职加薪的机会，工作表现得到认可。'
+      },
+      '田宅宫': {
+        events: ['房产运势好', '有置业机会', '家居环境改善', '家庭和睦'],
+        detail: '化禄入田宅宫，主该年房产运佳，有置业或装修的机会，家庭和睦。'
+      },
+      '福德宫': {
+        events: ['心情愉悦舒畅', '精神生活富足', '有享乐机会', '睡眠质量好'],
+        detail: '化禄入福德宫，主该年精神愉悦，有享受生活的机会，睡眠质量提升。'
+      },
+      '父母宫': {
+        events: ['父母身体健康', '长辈相助', '家庭关系和谐', '有祖荫庇护'],
+        detail: '化禄入父母宫，主该年父母健康，长辈关照，家庭关系融洽。'
+      }
+    },
+    // 化权入宫的详细事件
+    '化权': {
+      '命宫': {
+        events: ['权力地位提升', '有掌控力增强', '话语权增大', '领导能力体现'],
+        detail: '化权入命宫，主该年权力欲望增强，有掌控局面的能力，适合担任领导角色。'
+      },
+      '财帛宫': {
+        events: ['财运掌控力强', '有大额收入', '投资决策准确', '理财能力提升'],
+        detail: '化权入财帛宫，主该年财运旺盛，对金钱有掌控力，投资决策准确。'
+      },
+      '官禄宫': {
+        events: ['升职机会明显', '权力范围扩大', '事业有成', '领导重视'],
+        detail: '化权入官禄宫，主该年事业运势极强，有升职掌权的机会，领导能力得到认可。'
+      },
+      '夫妻宫': {
+        events: ['感情有主导权', '婚姻关系稳定', '配偶支持', '家庭地位提升'],
+        detail: '化权入夫妻宫，主该年在感情中有主导权，婚姻关系稳定，配偶给予支持。'
+      },
+      '迁移宫': {
+        events: ['在外有地位', '外出发展有利', '有贵人相助', '名声在外'],
+        detail: '化权入迁移宫，主该年在外发展顺利，有地位和名声，适合外出发展。'
+      },
+      '田宅宫': {
+        events: ['房产掌控力强', '有置业能力', '家居主导权', '家庭地位高'],
+        detail: '化权入田宅宫，主该年房产运佳，有置业能力，在家中地位提升。'
+      }
+    },
+    // 化科入宫的详细事件
+    '化科': {
+      '命宫': {
+        events: ['名声提升', '有贵人相助', '学业进步', '能力得到认可'],
+        detail: '化科入命宫，主该年名声上升，有贵人提携，学业或能力得到认可。'
+      },
+      '官禄宫': {
+        events: ['事业有名声', '工作受表彰', '有晋升机会', '专业能力认可'],
+        detail: '化科入官禄宫，主该年事业上有名声，工作表现受表彰，有晋升机会。'
+      },
+      '财帛宫': {
+        events: ['财名远扬', '理财有道', '收入稳定增长', '有生财之道'],
+        detail: '化科入财帛宫，主该年理财有方，财名远扬，收入稳定增长。'
+      },
+      '父母宫': {
+        events: ['长辈有名望', '家庭有面子', '祖荫庇护', '父母健康'],
+        detail: '化科入父母宫，主该年长辈名声好，家庭有面子，父母健康。'
+      }
+    },
+    // 化忌入宫的详细事件（重点关注）
+    '化忌': {
+      '命宫': {
+        events: ['身体健康问题', '人际关系紧张', '做事不顺心', '心情容易低落'],
+        detail: '化忌入命宫，主该年身体需注意，人际关系易有摩擦，做事多波折。'
+      },
+      '兄弟宫': {
+        events: ['与兄弟姐妹有矛盾', '朋友关系疏远', '合作项目受阻', '手足情谊淡薄'],
+        detail: '化忌入兄弟宫，主该年与兄弟姐妹或朋友易有矛盾，合作需谨慎。'
+      },
+      '夫妻宫': {
+        events: ['感情出现危机', '夫妻有争吵', '婚姻关系紧张', '配偶运势不佳'],
+        detail: '化忌入夫妻宫，主该年感情运势不佳，夫妻易有争吵，需多沟通。'
+      },
+      '子女宫': {
+        events: ['子女身体不佳', '与子女有冲突', '子女学业受阻', '添丁不顺'],
+        detail: '化忌入子女宫，主该年子女运不佳，需关注子女健康和学业。'
+      },
+      '财帛宫': {
+        events: ['收入减少', '有破财风险', '投资失利', '理财失误'],
+        detail: '化忌入财帛宫，主该年财运不佳，有破财风险，投资需谨慎。'
+      },
+      '疾厄宫': {
+        events: ['身体健康问题', '有病痛困扰', '精神压力大', '需要就医检查'],
+        detail: '化忌入疾厄宫，主该年身体需特别注意，有病痛困扰，建议体检。'
+      },
+      '迁移宫': {
+        events: ['外出不利', '有变动之苦', '在外不顺心', '交通安全'],
+        detail: '化忌入迁移宫，主该年外出需谨慎，有变动或交通方面的不顺。'
+      },
+      '仆役宫': {
+        events: ['交友不慎', '有背叛事件', '下属出问题', '社交纠纷'],
+        detail: '化忌入仆役宫，主该年交友需谨慎，可能遇到小人或背叛。'
+      },
+      '官禄宫': {
+        events: ['工作不顺利', '有降职风险', '事业受阻', '与领导冲突'],
+        detail: '化忌入官禄宫，主该年事业运势不佳，工作多阻碍，需低调行事。'
+      },
+      '田宅宫': {
+        events: ['房产问题', '家庭纠纷', '家居不安', '房产损失'],
+        detail: '化忌入田宅宫，主该年房产运势不佳，家庭易有纠纷。'
+      },
+      '福德宫': {
+        events: ['心情低落', '精神压力大', '失眠焦虑', '内心不安'],
+        detail: '化忌入福德宫，主该年精神压力大，容易失眠焦虑，需注意心理健康。'
+      },
+      '父母宫': {
+        events: ['父母身体不佳', '与长辈有矛盾', '家庭不睦', '祖荫受损'],
+        detail: '化忌入父母宫，主该年父母健康需关注，与长辈易有矛盾。'
+      }
+    }
+  };
+
+  // 星曜在流年宫位的意义
+  const STAR_IN_LIUNIAN = {
+    '紫微': '贵人运旺，有领导提携',
+    '天机': '智慧开启，有变动机遇',
+    '太阳': '名声提升，事业光明',
+    '武曲': '财运亨通，决断有力',
+    '天同': '安逸享乐，心情愉悦',
+    '廉贞': '奔波忙碌，情感纠葛',
+    '天府': '积蓄增加，工作稳定',
+    '太阴': '女性贵人，财运平稳',
+    '贪狼': '桃花旺盛，社交活跃',
+    '巨门': '口舌是非，沟通重要',
+    '天相': '贵人相助，合作顺利',
+    '天梁': '长辈关照，清高名声',
+    '七杀': '开创竞争，变动剧烈',
+    '破军': '突破创新，消耗较多'
+  };
+
+  // ===== 命盘基础计算 =====
+  function findMingGong(month, hour) {
+    let pos = (0 - (month - 1) + 12) % 12;
+    return (pos + hour) % 12;
+  }
+
+  function findShenGong(month, hour) {
+    let pos = (0 + (month - 1)) % 12;
+    return (pos + hour) % 12;
+  }
+
+  function getYearGan(year) { return TIAN_GAN[(year - 4) % 10]; }
+  function getYearZhi(year) { return DI_ZHI[(year - 4) % 12]; }
+  function getJu(year) { return JU_TABLE[getYearGan(year)] || 4; }
+
+  function placeZiWei(ju, day) {
+    const table = {
+      2: [2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7],
+      3: [3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8],
+      4: [4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9],
+      5: [5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10],
+      6: [6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11,0,1,2,3,4,5,6,7,8,9,10,11]
+    };
+    return table[ju][Math.min(day - 1, 29)] || 0;
+  }
+
+  function placeAllStars(ziWeiPos) {
+    const tianFuPos = (12 - ziWeiPos) % 12;
+    return new Map([
+      ['紫微', ziWeiPos], ['天机', (ziWeiPos + 1) % 12], ['太阳', (ziWeiPos + 2) % 12],
+      ['武曲', (ziWeiPos + 3) % 12], ['天同', (ziWeiPos + 4) % 12], ['廉贞', (ziWeiPos + 5) % 12],
+      ['天府', tianFuPos], ['太阴', (tianFuPos + 1) % 12], ['贪狼', (tianFuPos + 2) % 12],
+      ['天相', (tianFuPos + 3) % 12], ['天梁', (tianFuPos + 4) % 12], ['七杀', (tianFuPos + 5) % 12],
+      ['破军', (tianFuPos + 10) % 12], ['巨门', (ziWeiPos + 3) % 12]
+    ]);
+  }
+
+  function placeAuxStars(month, hour, year) {
+    const luPos = { '甲':1,'乙':2,'丙':5,'丁':6,'戊':5,'己':6,'庚':8,'辛':9,'壬':11,'癸':0 }[getYearGan(year)] || 0;
+    return new Map([
+      ['左辅', (4 + month - 1) % 12], ['右弼', (10 - (month - 1) + 12) % 12],
+      ['文昌', (5 - hour + 12) % 12], ['文曲', (4 + hour) % 12],
+      ['禄存', luPos], ['擎羊', (luPos + 1) % 12], ['陀罗', (luPos - 1 + 12) % 12]
+    ]);
+  }
+
+  function getPalaceGan(year, palacePos) {
+    const yearGan = getYearGan(year);
+    return PALACE_GAN_TABLE[yearGan][palacePos];
+  }
+
+  function calculateDaYun(birthYear, gender, mingGong, ju) {
+    const isYangYear = birthYear % 2 === 0;
+    const isMale = gender === 'male';
+    const forward = (isYangYear && isMale) || (!isYangYear && !isMale);
+    const currentYear = new Date().getFullYear();
+    const currentAge = currentYear - birthYear;
+    
+    const result = [];
+    for (let i = 0; i < 12; i++) {
+      const startAge = ju + i * 10;
+      const pos = forward ? (mingGong + i) % 12 : (mingGong - i + 12) % 12;
+      result.push({
+        period: `${startAge}-${startAge + 9}岁`,
+        pos: pos,
+        gan: getPalaceGan(birthYear, pos),
+        isCurrent: currentAge >= startAge && currentAge <= startAge + 9
+      });
+    }
+    return result;
+  }
+
+  // ===== 核心事件生成函数 =====
+  function generateYearEvents(birthYear, targetYear, mainStars, auxStars, mingGong, gender) {
+    const gan = getYearGan(targetYear);
+    const zhi = getYearZhi(targetYear);
+    const liuNianPos = (targetYear - 4 + 10000) % 12;
+    
+    const events = [];
+    const details = [];
+    
+    // 1. 流年四化事件
+    const sihua = SI_HUA[gan];
+    if (sihua) {
+      // 化禄
+      const luStar = sihua.lu;
+      const luPos = mainStars.get(luStar) ?? auxStars.get(luStar);
+      if (luPos !== undefined) {
+        const palace = PALACE_NAMES[luPos];
+        const eventData = DETAILED_EVENTS['化禄'][palace];
+        if (eventData) {
+          const randomEvent = eventData.events[Math.floor(Math.random() * eventData.events.length)];
+          events.push(`【化禄·${palace}】${randomEvent}`);
+          details.push(`**${luStar}化禄入${palace}**：${eventData.detail}`);
+        }
+      }
+      
+      // 化权
+      const quanStar = sihua.quan;
+      const quanPos = mainStars.get(quanStar) ?? auxStars.get(quanStar);
+      if (quanPos !== undefined) {
+        const palace = PALACE_NAMES[quanPos];
+        const eventData = DETAILED_EVENTS['化权'][palace];
+        if (eventData) {
+          const randomEvent = eventData.events[Math.floor(Math.random() * eventData.events.length)];
+          events.push(`【化权·${palace}】${randomEvent}`);
+          details.push(`**${quanStar}化权入${palace}**：${eventData.detail}`);
+        }
+      }
+      
+      // 化科
+      const keStar = sihua.ke;
+      const kePos = mainStars.get(keStar) ?? auxStars.get(keStar);
+      if (kePos !== undefined) {
+        const palace = PALACE_NAMES[kePos];
+        const eventData = DETAILED_EVENTS['化科'][palace];
+        if (eventData) {
+          const randomEvent = eventData.events[Math.floor(Math.random() * eventData.events.length)];
+          events.push(`【化科·${palace}】${randomEvent}`);
+          details.push(`**${keStar}化科入${palace}**：${eventData.detail}`);
+        }
+      }
+      
+      // 化忌（重点）
+      const jiStar = sihua.ji;
+      const jiPos = mainStars.get(jiStar) ?? auxStars.get(jiStar);
+      if (jiPos !== undefined) {
+        const palace = PALACE_NAMES[jiPos];
+        const eventData = DETAILED_EVENTS['化忌'][palace];
+        if (eventData) {
+          const randomEvent = eventData.events[Math.floor(Math.random() * eventData.events.length)];
+          events.push(`【化忌·${palace}】${randomEvent} ⚠️`);
+          details.push(`**${jiStar}化忌入${palace}**：${eventData.detail}`);
+        }
+      }
+    }
+    
+    // 2. 流年宫位星曜
+    for (const [starName, starPos] of mainStars) {
+      if (starPos === liuNianPos) {
+        const meaning = STAR_IN_LIUNIAN[starName] || '运势变化';
+        events.push(`【流年${zhi}年】${starName}坐守，${meaning}`);
+        details.push(`**流年${zhi}年**：${starName}星坐守流年宫位，主该年${meaning}。`);
+      }
+    }
+    
+    // 3. 三方四正分析
+    const opposite = (liuNianPos + 6) % 12;
+    const left = (liuNianPos - 1 + 12) % 12;
+    const right = (liuNianPos + 1) % 12;
+    
+    // 检查对宫
+    for (const [starName, starPos] of mainStars) {
+      if (starPos === opposite) {
+        events.push(`【三方·对宫】见${starName}，主${STAR_IN_LIUNIAN[starName] || '变化'}`);
+        details.push(`**对宫见${starName}**：流年对宫有${starName}星，对整体运势有影响。`);
+      }
+    }
+    
+    // 4. 大运叠加
+    const ju = getJu(birthYear);
+    const daYuns = calculateDaYun(birthYear, gender, mingGong, ju);
+    const currentDaYun = daYuns.find(d => d.isCurrent);
+    if (currentDaYun) {
+      const daYunGan = currentDaYun.gan;
+      const daYunSihua = SI_HUA[daYunGan];
+      if (daYunSihua) {
+        const daYunLuPos = mainStars.get(daYunSihua.lu);
+        if (daYunLuPos !== undefined) {
+          details.push(`**大运${daYunGan}干四化**：大运化禄入${PALACE_NAMES[daYunLuPos]}，此十年财运事业基础较好。`);
+        }
+      }
+    }
+    
+    // 5. 流年与命宫关系
+    const relationToMing = (liuNianPos - mingGong + 12) % 12;
+    if (relationToMing === 0) {
+      details.push(`**流年与本命同宫**：流年地支与命宫相同，该年运势特别重要，宜把握机遇。`);
+    } else if (relationToMing === 6) {
+      details.push(`**流年冲命宫**：流年地支冲命宫，该年变动较大，宜谨慎行事。`);
+    }
+    
+    return { events, details, ganzhi: gan + zhi };
+  }
+
+  // ===== 初始化 =====
+  function initCalculator() {
+    const btn = document.getElementById('calc-btn');
+    if (!btn) return;
+    
+    btn.addEventListener('click', function() {
+      const calendar = document.getElementById('calc-calendar').value;
+      const year = parseInt(document.getElementById('calc-year').value);
+      const month = parseInt(document.getElementById('calc-month').value);
+      const day = parseInt(document.getElementById('calc-day').value);
+      const hour = parseInt(document.getElementById('calc-hour').value);
+      const gender = document.getElementById('calc-gender').value;
+
+      if (!year || !month || !day || isNaN(hour) || !gender) {
+        document.getElementById('calc-msg').textContent = '请填写完整的出生信息';
+        return;
+      }
+
+      // 农历处理（简化版）
+      let lunarMonth = month, lunarDay = day, lunarYear = year;
+      if (calendar === 'solar') {
+        lunarMonth = Math.min(Math.floor((month - 1) * 30.44 + day) / 29.5 + 1, 12) | 0;
+        lunarDay = Math.floor(((month - 1) * 30.44 + day) % 29.5) + 1;
+        document.getElementById('calc-msg').innerHTML = `<span style="color:#c9a84c;">已转换为农历：${lunarYear}年${lunarMonth}月${lunarDay}日（建议直接输入农历以确保准确）</span>`;
+      }
+
+      // 命盘计算
+      const mingGong = findMingGong(lunarMonth, hour);
+      const shenGong = findShenGong(lunarMonth, hour);
+      const ju = getJu(lunarYear);
+      const ziWeiPos = placeZiWei(ju, lunarDay);
+      const mainStars = placeAllStars(ziWeiPos);
+      const auxStars = placeAuxStars(lunarMonth, hour, lunarYear);
+      const daYuns = calculateDaYun(lunarYear, gender, mingGong, ju);
+
+      document.getElementById('calc-result').style.display = 'block';
+      
+      const currentYear = new Date().getFullYear();
+      const age = currentYear - year;
+      const currentDaYun = daYuns.find(d => d.isCurrent);
+      const hourNames = ['子时','丑时','寅时','卯时','辰时','巳时','午时','未时','申时','酉时','戌时','亥时'];
+
+      // 命盘总览
+      document.getElementById('calc-summary').innerHTML = `
+        <p><strong>农历生辰：</strong>${lunarYear}年${lunarMonth}月${lunarDay}日 ${hourNames[hour]}（${getYearGan(lunarYear)}${getYearZhi(lunarYear)}年）</p>
+        <p><strong>五行局：</strong>${JU_NAMES[ju]}</p>
+        <p><strong>命宫：</strong>${DI_ZHI[mingGong]}宫 · ${PALACE_NAMES[mingGong]}</p>
+        <p><strong>身宫：</strong>${DI_ZHI[shenGong]}宫 · ${PALACE_NAMES[shenGong]}</p>
+        <p><strong>当前年龄：</strong>${age}岁</p>
+        <p><strong>当前大运：</strong>${currentDaYun ? currentDaYun.period + '（' + DI_ZHI[currentDaYun.pos] + '宫·' + currentDaYun.gan + '干）' : '未到'}</p>
+      `;
+
+      // 生年四化
+      const birthGan = getYearGan(lunarYear);
+      const birthSihua = SI_HUA[birthGan];
+      if (birthSihua) {
+        const luPos = mainStars.get(birthSihua.lu);
+        const quanPos = mainStars.get(birthSihua.quan);
+        const kePos = mainStars.get(birthSihua.ke);
+        const jiPos = mainStars.get(birthSihua.ji);
+        
+        document.getElementById('calc-sihua').innerHTML = `
+          <div class="sihua-grid">
+            <div class="sihua-item lu"><span class="sihua-star">${birthSihua.lu}</span><span class="sihua-label">化禄</span><span class="sihua-palace">${luPos !== undefined ? PALACE_NAMES[luPos] : '—'}</span></div>
+            <div class="sihua-item quan"><span class="sihua-star">${birthSihua.quan}</span><span class="sihua-label">化权</span><span class="sihua-palace">${quanPos !== undefined ? PALACE_NAMES[quanPos] : '—'}</span></div>
+            <div class="sihua-item ke"><span class="sihua-star">${birthSihua.ke}</span><span class="sihua-label">化科</span><span class="sihua-palace">${kePos !== undefined ? PALACE_NAMES[kePos] : '—'}</span></div>
+            <div class="sihua-item ji"><span class="sihua-star">${birthSihua.ji}</span><span class="sihua-label">化忌</span><span class="sihua-palace">${jiPos !== undefined ? PALACE_NAMES[jiPos] : '—'}</span></div>
+          </div>
+        `;
+      }
+
+      // 十二宫命盘图
+      let chartHtml = '<div class="ziwei-chart">';
+      for (let i = 0; i < 12; i++) {
+        const palaceStars = [];
+        for (const [name, pos] of mainStars) { if (pos === i) palaceStars.push(name); }
+        for (const [name, pos] of auxStars) { if (pos === i) palaceStars.push(name); }
+        
+        chartHtml += `
+          <div class="palace-cell ${i === mingGong ? 'ming-gong' : ''} ${i === shenGong ? 'shen-gong' : ''}">
+            <div class="palace-gan">${getPalaceGan(lunarYear, i)}</div>
+            <div class="palace-title">${PALACE_NAMES[i]}</div>
+            <div class="palace-zhi">${DI_ZHI[i]}</div>
+            <div class="palace-stars">${palaceStars.length > 0 ? palaceStars.join(' ') : '—'}</div>
+            ${i === mingGong ? '<span class="palace-tag">命</span>' : ''}
+            ${i === shenGong ? '<span class="palace-tag shen">身</span>' : ''}
+          </div>
+        `;
+      }
+      chartHtml += '</div>';
+      document.getElementById('calc-chart').innerHTML = chartHtml;
+
+      // 大运
+      let daYunHtml = '<div class="dayun-list">';
+      daYuns.forEach(dy => {
+        daYunHtml += `
+          <div class="dayun-item ${dy.isCurrent ? 'current' : ''}">
+            <span class="dy-period">${dy.period}</span>
+            <span class="dy-pos">${DI_ZHI[dy.pos]}宫</span>
+            <span class="dy-gan">${dy.gan}干</span>
+            ${dy.isCurrent ? '<span class="dy-tag">当前</span>' : ''}
+          </div>
+        `;
+      });
+      daYunHtml += '</div>';
+      document.getElementById('calc-dayun').innerHTML = daYunHtml;
+
+      // 过去五年
+      let pastHtml = '';
+      for (let y = currentYear - 5; y < currentYear; y++) {
+        const result = generateYearEvents(lunarYear, y, mainStars, auxStars, mingGong, gender);
+        pastHtml += `
+          <div class="event-year past">
+            <div class="event-header">
+              <span class="event-year-label">${y}年</span>
+              <span class="event-ganzhi">${result.ganzhi}年</span>
+              <span class="event-age">${age - (currentYear - y)}岁</span>
+            </div>
+            <div class="event-summary">
+              ${result.events.map(e => `<div class="event-tag">${e}</div>`).join('')}
+            </div>
+            <div class="event-details">
+              ${result.details.map(d => `<p>${d}</p>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('calc-past').innerHTML = pastHtml;
+
+      // 未来五年
+      let futureHtml = '';
+      for (let y = currentYear + 1; y <= currentYear + 5; y++) {
+        const result = generateYearEvents(lunarYear, y, mainStars, auxStars, mingGong, gender);
+        futureHtml += `
+          <div class="event-year future">
+            <div class="event-header">
+              <span class="event-year-label">${y}年</span>
+              <span class="event-ganzhi">${result.ganzhi}年</span>
+              <span class="event-age">${age + (y - currentYear)}岁</span>
+            </div>
+            <div class="event-summary">
+              ${result.events.map(e => `<div class="event-tag">${e}</div>`).join('')}
+            </div>
+            <div class="event-details">
+              ${result.details.map(d => `<p>${d}</p>`).join('')}
+            </div>
+          </div>
+        `;
+      }
+      document.getElementById('calc-future').innerHTML = futureHtml;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initCalculator);
+  if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    initCalculator();
+  }
+</script>

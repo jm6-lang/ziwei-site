@@ -1,318 +1,156 @@
 ---
 title: 紫微斗数指南
-description: The complete guide to Zi Wei Dou Shu — Chinese Destiny Astrology (紫微斗数)
+description: The complete guide to Zi Wei Dou Shu — Chinese Destiny Astrology
 template: splash
 hero:
   title: 紫微斗数
-  tagline: 紫微斗数 · Zi Wei Dou Shu
-  image:
-    html: |
-      <div class="hero-orbit">
-        <div class="orbit-ring orbit-ring-1"></div>
-        <div class="orbit-ring orbit-ring-2"></div>
-        <div class="orbit-ring orbit-ring-3"></div>
-        <div class="orbit-center">
-          <span class="orbit-star">紫</span>
-        </div>
-        <div class="orbit-dot dot-1"></div>
-        <div class="orbit-dot dot-2"></div>
-        <div class="orbit-dot dot-3"></div>
-        <div class="orbit-dot dot-4"></div>
-      </div>
+  tagline: Purple Star Astrology — The Ancient Chinese Art of Destiny Reading
   actions:
-    - text: 开始学习 · Start Learning
-      link: /guides/what-is-zi-wei/
+    - text: 立即排盘
+      link: /tools/chart-calculator/
       icon: right-arrow
       variant: primary
-    - text: 在线排盘 · Ziping Chart
-      link: '#ziping-section'
-      icon: seti:telescope
-      variant: primary
+    - text: 开始学习
+      link: /guides/what-is-zi-wei/
+      icon: external
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
-import ZipingChart from '../../components/ZipingChart.astro';
-import ClientOnly from '../../components/ClientOnly.astro';
 
-<div class="home-calligraphy">观星悟道 · 知命立命</div>
+<div class="home-calligraphy">觀星悟道 · 知命立命</div>
 
 <div class="home-intro">
   <p>
-    <strong>紫微斗数</strong>（Zi Wei Dou Shu），又称「帝王学」，是中国古代最精密的命运预测体系之一。
-    起源于宋代，历经千年传承，以<strong>108 颗星曜</strong>与<strong>十二宫位</strong>构建完整人生图谱。
-  </p>
-  <p>
-    与西方占星不同，紫微斗数不仅揭示性格特质，更深探命运轨迹、运势起伏与人生关键时刻。
-    本指南以现代语言，系统教授这一古老智慧。
+    <strong>紫微斗数</strong> (Zi Wei Dou Shu), the "Purple Star Astrology," is one of China's most sophisticated destiny-reading systems. Dating back over 1,000 years, it uses <strong>108 stars</strong> and <strong>12 life palaces</strong> to map your complete destiny.
   </p>
 </div>
 
-<!-- 紫微斗数排盘分析窗口 -->
-<div id="ziping-section" class="ziping-section">
-  <div class="section-divider">◈ 在线排盘 · 十年运势 ◈</div>
-  
-  <div class="ziping-intro">
-    <p>
-      <strong>紫微斗数排盘系统</strong> —— 输入您的出生信息，即刻获取专属命盘解析。
-      深度分析<strong>前十年人生轨迹</strong>与<strong>未来十年运势走向</strong>，
-      助您知命立命，把握人生关键机遇。
-    </p>
+<div class="chart-cta-section">
+  <div class="chart-cta-box">
+    <div class="cta-icon">⭐</div>
+    <h3>紫微斗数排盘分析</h3>
+    <p>输入您的出生时间，即刻生成完整命盘</p>
+    <ul class="cta-features">
+      <li>✓ 十四主星落宫详解</li>
+      <li>✓ 过去十年运势回顾</li>
+      <li>✓ 未来十年运势预测</li>
+      <li>✓ 大运流年详细分析</li>
+    </ul>
+    <a href="/tools/chart-calculator/" class="cta-button">立即排盘 →</a>
   </div>
-  
-  <ClientOnly>
-    <ZipingChart />
-  </ClientOnly>
 </div>
 
-<div class="traditional-divider">◈ 探索之旅 ◈</div>
+<div class="community-section">
+  <div class="community-banner">
+    <div class="community-banner-icon">論</div>
+    <h3>紫微社区</h3>
+    <p>分享您的紫微斗数心得、命盘解读和想法建议</p>
+    <a href="/community/" class="community-btn">进入社区 →</a>
+  </div>
+</div>
+
+<div class="traditional-divider">◈ 核心知识 ◈</div>
 
 <CardGrid stagger>
-  <Card title="什么是紫微斗数？" icon="seti:book">
-    了解这门千年智慧的起源、核心理论与东西方占星差异。从入门到精通的第一步。
-    [<strong>入门指南</strong> →](/guides/what-is-zi-wei/)
+  <Card title="What is Zi Wei Dou Shu?" icon="seti:book">
+    Learn the origins, core theory, and how this 1,000-year-old system differs from Western astrology.
+
+    [**Start Here →**](/guides/what-is-zi-wei/)
   </Card>
-  <Card title="十四颗主星" icon="seti:star">
-    紫微、天机、太阳……十四主星各掌天命。本站详述每颗星的性情、事业、财富、感情全解。
-    [<strong>星曜总览</strong> →](/stars/overview/)
+  <Card title="The 14 Main Stars" icon="seti:star">
+    Zi Wei, Tian Ji, Tai Yang... each of the 14 main stars governs a different aspect of destiny.
+
+    [**Explore Stars →**](/stars/overview/)
   </Card>
-  <Card title="十二宫位" icon="seti:layout">
-    命宫、财帛宫、事业宫、夫妻宫……十二宫位呈现人生全景。了解各宫含义与星曜配置。
-    [<strong>宫位总览</strong> →](/palaces/overview/)
+  <Card title="The 12 Palaces" icon="seti:layout">
+    Life Palace, Wealth Palace, Career Palace, Spouse Palace... the 12 palaces reveal every dimension of life.
+
+    [**Explore Palaces →**](/palaces/overview/)
   </Card>
-  <Card title="命盘解读实例" icon="seti:search">
-    从名人命盘到年度运势，学习如何将理论应用于实践。
-    [<strong>案例分析</strong> →](/cases/celebrity-charts/)
+  <Card title="Case Studies" icon="seti:search">
+    From celebrity charts to annual fortune analysis — learn how to apply Zi Wei Dou Shu.
+
+    [**View Cases →**](/cases/celebrity-charts/)
   </Card>
 </CardGrid>
 
-<div class="traditional-divider">◈ 星曜速查 ◈</div>
+<div class="traditional-divider">◈ 十四主星速查 ◈</div>
 
 <div class="star-grid">
-
-<a class="star-card" href="/stars/zi-wei/">
-  <span class="star-chinese">紫微</span>
-  <span class="star-english">Zi Wei · Emperor Star</span>
-  <span class="star-desc">帝王之星，统御诸星，主宰命运</span>
-</a>
-
-<a class="star-card" href="/stars/tian-ji/">
-  <span class="star-chinese">天机</span>
-  <span class="star-english">Tian Ji · Strategy Star</span>
-  <span class="star-desc">谋略智慧，机变灵动，策划之心</span>
-</a>
-
-<a class="star-card" href="/stars/tai-yang/">
-  <span class="star-chinese">太阳</span>
-  <span class="star-english">Tai Yang · Sun Star</span>
-  <span class="star-desc">光明炽热，权力声望，男性力量</span>
-</a>
-
-<a class="star-card" href="/stars/wu-qu/">
-  <span class="star-chinese">武曲</span>
-  <span class="star-english">Wu Qu · Military Star</span>
-  <span class="star-desc">刚毅果断，财富之星，金属之气</span>
-</a>
-
-<a class="star-card" href="/stars/lian-zhen/">
-  <span class="star-chinese">廉贞</span>
-  <span class="star-english">Lian Zhen · Chastity Star</span>
-  <span class="star-desc">情欲之星，爱恨交织，复杂而深刻</span>
-</a>
-
-<a class="star-card" href="/stars/tian-tong/">
-  <span class="star-chinese">天同</span>
-  <span class="star-english">Tian Tong · Harmony Star</span>
-  <span class="star-desc">福泽之星，温和快乐，享乐与满足</span>
-</a>
-
-<a class="star-card" href="/stars/tian-yong/">
-  <span class="star-chinese">天梁</span>
-  <span class="star-english">Tian Yong · Supervisor Star</span>
-  <span class="star-desc">监察之星，保护智慧，长者之德</span>
-</a>
-
-<a class="star-card" href="/stars/ji-men/">
-  <span class="star-chinese">巨门</span>
-  <span class="star-english">Ji Men · Hidden Star</span>
-  <span class="star-desc">隐藏之门，复杂沟通，深层洞察</span>
-</a>
-
-<a class="star-card" href="/stars/lu-cun/">
-  <span class="star-chinese">禄存</span>
-  <span class="star-english">Lu Cun · Fortune Star</span>
-  <span class="star-desc">财富积累，稳健积累，物质繁荣</span>
-</a>
-
-<a class="star-card" href="/stars/tian-kong/">
-  <span class="star-chinese">天空</span>
-  <span class="star-english">Tian Kong · Void Star</span>
-  <span class="star-desc">虚空之象，哲学精神，超然物外</span>
-</a>
-
-<a class="star-card" href="/stars/tao-hua/">
-  <span class="star-chinese">桃花</span>
-  <span class="star-english">Tao Hua · Romance Star</span>
-  <span class="star-desc">桃红之运，浪漫魅力，艺术美感</span>
-</a>
-
-<a class="star-card" href="/stars/zuo-fu-you-bi/">
-  <span class="star-chinese">左辅 · 右弼</span>
-  <span class="star-english">Zuo Fu & You Bi · Assistants</span>
-  <span class="star-desc">辅弼双星，辅助之力，伙伴与支持</span>
-</a>
-
-<a class="star-card" href="/stars/qing-yang/">
-  <span class="star-chinese">青羊 · 博士</span>
-  <span class="star-english">Qing Yang & Bo Xu · Scholars</span>
-  <span class="star-desc">学术权威，专业造诣，知识的力量</span>
-</a>
-
+  <a class="star-card" href="/stars/zi-wei/">
+    <span class="star-chinese">紫微</span>
+    <span class="star-english">Zi Wei · Emperor</span>
+    <span class="star-desc">权威、领导、帝王命格</span>
+  </a>
+  <a class="star-card" href="/stars/tian-ji/">
+    <span class="star-chinese">天機</span>
+    <span class="star-english">Tian Ji · Strategy</span>
+    <span class="star-desc">智慧、谋略、机变</span>
+  </a>
+  <a class="star-card" href="/stars/tai-yang/">
+    <span class="star-chinese">太陽</span>
+    <span class="star-english">Tai Yang · Sun</span>
+    <span class="star-desc">光明、权势、名声</span>
+  </a>
+  <a class="star-card" href="/stars/wu-qu/">
+    <span class="star-chinese">武曲</span>
+    <span class="star-english">Wu Qu · Military</span>
+    <span class="star-desc">刚毅、财星、决断</span>
+  </a>
+  <a class="star-card" href="/stars/lian-zhen/">
+    <span class="star-chinese">廉貞</span>
+    <span class="star-english">Lian Zhen · Integrity</span>
+    <span class="star-desc">激情、复杂、是非</span>
+  </a>
+  <a class="star-card" href="/stars/tian-tong/">
+    <span class="star-chinese">天同</span>
+    <span class="star-english">Tian Tong · Harmony</span>
+    <span class="star-desc">福星、安逸、享受</span>
+  </a>
+  <a class="star-card" href="/stars/tian-fu/">
+    <span class="star-chinese">天府</span>
+    <span class="star-english">Tian Fu · Treasury</span>
+    <span class="star-desc">财库、稳定、守成</span>
+  </a>
+  <a class="star-card" href="/stars/tai-yin/">
+    <span class="star-chinese">太陰</span>
+    <span class="star-english">Tai Yin · Moon</span>
+    <span class="star-desc">阴柔、财富、田宅</span>
+  </a>
+  <a class="star-card" href="/stars/tan-lang/">
+    <span class="star-chinese">貪狼</span>
+    <span class="star-english">Tan Lang · Greedy Wolf</span>
+    <span class="star-desc">欲望、桃花、多才</span>
+  </a>
+  <a class="star-card" href="/stars/tian-xiang/">
+    <span class="star-chinese">天相</span>
+    <span class="star-english">Tian Xiang · Minister</span>
+    <span class="star-desc">辅佐、印星、官禄</span>
+  </a>
+  <a class="star-card" href="/stars/tian-yong/">
+    <span class="star-chinese">天梁</span>
+    <span class="star-english">Tian Liang · Supervisor</span>
+    <span class="star-desc">荫星、长辈、清高</span>
+  </a>
+  <a class="star-card" href="/stars/qi-sha/">
+    <span class="star-chinese">七殺</span>
+    <span class="star-english">Qi Sha · Seven Kills</span>
+    <span class="star-desc">勇武、开创、孤克</span>
+  </a>
+  <a class="star-card" href="/stars/po-jun/">
+    <span class="star-chinese">破軍</span>
+    <span class="star-english">Po Jun · Destroyer</span>
+    <span class="star-desc">变革、破坏、重建</span>
+  </a>
+  <a class="star-card" href="/stars/ji-men/">
+    <span class="star-chinese">巨門</span>
+    <span class="star-english">Ji Men · Hidden Gate</span>
+    <span class="star-desc">口舌、是非、暗财</span>
+  </a>
 </div>
 
 <div class="home-footer-poem">
-  <p>
-    星移斗转，命随数定。<br/>
-    知命而立命，观星以悟道。
-  </p>
-  <p class="poem-author">—— 紫微斗数</p>
+  <p>星移斗轉，命隨數定。</p>
+  <p>知命而立命，觀星以悟道。</p>
+  <p class="poem-author">— 紫微斗數</p>
 </div>
-
-<style>
-/* Homepage-only decorative styles */
-.home-calligraphy {
-  font-family: 'Ma Shan Zheng', cursive;
-  font-size: 2.8rem;
-  text-align: center;
-  color: rgba(201, 168, 76, 0.35);
-  letter-spacing: 0.5em;
-  margin: 0.5rem 0 1.5rem;
-  line-height: 1.2;
-}
-
-.home-intro {
-  max-width: 680px;
-  margin: 0 auto 1.5rem;
-  text-align: center;
-}
-
-.home-intro p {
-  font-size: 1.08rem;
-  color: #b8a888;
-  line-height: 1.9;
-  margin-bottom: 0.8em;
-}
-
-.home-intro strong {
-  color: #e8c96e;
-}
-
-/* 排盘区域样式 */
-.ziping-section {
-  margin: 3rem 0;
-  padding: 2rem;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08), rgba(201, 168, 76, 0.02));
-  border: 1px solid rgba(201, 168, 76, 0.15);
-  border-radius: 12px;
-}
-
-.section-divider {
-  font-family: 'Ma Shan Zheng', cursive;
-  font-size: 2rem;
-  text-align: center;
-  color: #c9a84c;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.3em;
-}
-
-.ziping-intro {
-  max-width: 800px;
-  margin: 0 auto 2rem;
-  text-align: center;
-}
-
-.ziping-intro p {
-  font-size: 1.1rem;
-  color: #b8a888;
-  line-height: 1.8;
-}
-
-.ziping-intro strong {
-  color: #e8c96e;
-}
-
-.home-footer-poem {
-  text-align: center;
-  margin-top: 2.5rem;
-  padding: 1.5rem;
-  background: linear-gradient(135deg, rgba(201, 168, 76, 0.05), transparent);
-  border-top: 1px solid rgba(201, 168, 76, 0.15);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
-}
-
-.home-footer-poem p {
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.15rem;
-  color: rgba(201, 168, 76, 0.5);
-  margin: 0;
-  line-height: 1.8;
-}
-
-.home-footer-poem .poem-author {
-  font-size: 0.9rem !important;
-  margin-top: 0.5rem !important;
-  opacity: 0.7;
-}
-
-/* Hero SVG animation */
-.hero-orbit {
-  position: relative;
-  width: 160px;
-  height: 160px;
-  margin: 0 auto;
-}
-
-.orbit-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(201, 168, 76, 0.2);
-  animation: orbit-spin linear infinite;
-}
-
-.orbit-ring-1 { width: 60px; height: 60px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-duration: 8s; }
-.orbit-ring-2 { width: 100px; height: 100px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-duration: 14s; animation-direction: reverse; border-style: dashed; }
-.orbit-ring-3 { width: 140px; height: 140px; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-duration: 20s; border-color: rgba(201, 168, 76, 0.1); }
-
-.orbit-center {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px; height: 50px;
-  background: radial-gradient(circle, rgba(201, 168, 76, 0.3), transparent);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-family: 'Noto Serif SC', serif;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #c9a84c;
-  text-shadow: 0 0 12px rgba(201, 168, 76, 0.6);
-}
-
-.orbit-dot {
-  position: absolute;
-  width: 6px; height: 6px;
-  background: #c9a84c;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(201, 168, 76, 0.8);
-  animation: orbit-spin linear infinite;
-}
-
-.dot-1 { top: 50%; left: calc(50% + 26px); transform: translate(-50%, -50%); animation-duration: 8s; }
-.dot-2 { top: calc(50% - 46px); left: 50%; transform: translate(-50%, 50%); animation-duration: 14s; }
-.dot-3 { top: 50%; left: calc(50% - 66px); transform: translate(-50%, -50%); animation-duration: 14s; animation-direction: reverse; }
-.dot-4 { top: calc(50% + 66px); left: 50%; transform: translate(-50%, -50%); animation-duration: 20s; animation-direction: reverse; width: 4px; height: 4px; }
-
-@keyframes orbit-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-</style>

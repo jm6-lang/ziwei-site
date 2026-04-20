@@ -1,1 +1,1680 @@
-/* ================================================\n   Zi Wei Dou Shu Guide — Chinese Traditional Aesthetic\n   紫微斗数 · 传统美学增强包\n   ================================================ */\n\n/* --- Google Fonts: Chinese Serif + Calligraphy --- */\n@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');\n\n/* ================================================\n   CSS VARIABLES — Imperial Color Palette\n   ================================================ */\n:root {\n  /* Primary: Imperial Gold */\n  --ziwei-gold: #c9a84c;\n  --ziwei-gold-light: #e8c96e;\n  --ziwei-gold-dark: #9a7a2a;\n\n  /* Secondary: Deep Crimson (宫墙红) */\n  --ziwei-red: #8b1a1a;\n  --ziwei-red-light: #c0392b;\n  --ziwei-red-dark: #5c0f0f;\n\n  /* Accent: Royal Blue (帝王蓝) */\n  --ziwei-blue: #1a2d5a;\n  --ziwei-blue-light: #2a4080;\n\n  /* Background layers */\n  --ziwei-bg: #0f0d0a;\n  --ziwei-bg-secondary: #1a1710;\n  --ziwei-bg-card: rgba(30, 25, 15, 0.85);\n  --ziwei-bg-card-hover: rgba(45, 38, 20, 0.95);\n\n  /* Text */\n  --ziwei-text: #e8e0cc;\n  --ziwei-text-secondary: #b8a888;\n  --ziwei-text-muted: #7a6a50;\n\n  /* Borders */\n  --ziwei-border: rgba(201, 168, 76, 0.25);\n  --ziwei-border-strong: rgba(201, 168, 76, 0.55);\n\n  /* Fonts */\n  --font-chinese: 'Noto Serif SC', 'STSong', 'SimSun', serif;\n  --font-calligraphy: 'Ma Shan Zheng', 'ZCOOL XiaoWei', cursive;\n  --font-body: 'Noto Serif SC', Georgia, serif;\n}\n\n/* ================================================\n   GLOBAL — Body & Background\n   ================================================ */\nhtml {\n  scroll-behavior: smooth;\n}\n\nbody {\n  font-family: var(--font-body);\n  background-color: var(--ziwei-bg);\n  color: var(--ziwei-text);\n  line-height: 1.8;\n  letter-spacing: 0.02em;\n}\n\n/* Animated starfield background */\nbody::before {\n  content: '';\n  position: fixed;\n  inset: 0;\n  background:\n    radial-gradient(ellipse at 20% 50%, rgba(26, 45, 90, 0.35) 0%, transparent 60%),\n    radial-gradient(ellipse at 80% 20%, rgba(139, 26, 26, 0.2) 0%, transparent 50%),\n    radial-gradient(ellipse at 50% 80%, rgba(201, 168, 76, 0.08) 0%, transparent 55%),\n    radial-gradient(1px 1px at 15% 35%, rgba(201, 168, 76, 0.7) 0%, transparent 100%),\n    radial-gradient(1px 1px at 42% 72%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),\n    radial-gradient(1px 1px at 67% 18%, rgba(201, 168, 76, 0.6) 0%, transparent 100%),\n    radial-gradient(1px 1px at 83% 58%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),\n    radial-gradient(1px 1px at 25% 85%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),\n    radial-gradient(1px 1px at 55% 45%, rgba(201, 168, 76, 0.3) 0%, transparent 100%),\n    radial-gradient(1px 1px at 78% 92%, rgba(201, 168, 76, 0.6) 0%, transparent 100%),\n    radial-gradient(1px 1px at 90% 30%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),\n    radial-gradient(1px 1px at 35% 55%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),\n    radial-gradient(1px 1px at 60% 10%, rgba(201, 168, 76, 0.3) 0%, transparent 100%),\n    radial-gradient(1px 1px at 10% 65%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),\n    radial-gradient(1px 1px at 72% 42%, rgba(201, 168, 76, 0.5) 0%, transparent 100%);\n  pointer-events: none;\n  z-index: -1;\n}\n\n/* Subtle noise texture overlay */\nbody::after {\n  content: '';\n  position: fixed;\n  inset: 0;\n  background-image: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E\");\n  pointer-events: none;\n  z-index: 0;\n  opacity: 0.4;\n}\n\n/* ================================================\n   TYPOGRAPHY\n   ================================================ */\nh1, h2, h3, h4, h5, h6 {\n  font-family: var(--font-chinese);\n  color: var(--ziwei-gold);\n  font-weight: 600;\n  letter-spacing: 0.04em;\n  line-height: 1.4;\n}\n\n/* Chinese section titles with gold line decoration */\nh2 {\n  position: relative;\n  padding-bottom: 0.5em;\n  margin-top: 2em;\n  margin-bottom: 0.8em;\n  font-size: 1.5rem;\n  color: var(--ziwei-gold);\n}\n\nh2::after {\n  content: '';\n  position: absolute;\n  bottom: 0;\n  left: 0;\n  width: 60px;\n  height: 2px;\n  background: linear-gradient(90deg, var(--ziwei-gold), transparent);\n  border-bottom: 1px solid var(--ziwei-gold-dark);\n}\n\nh3 {\n  font-size: 1.2rem;\n  color: var(--ziwei-gold-light);\n  margin-top: 1.5em;\n  margin-bottom: 0.5em;\n}\n\n/* First H1 gets calligraphy treatment */\n.sl-markdown-content h1:first-child {\n  font-family: var(--font-chinese);\n  font-size: 2.4rem;\n  font-weight: 700;\n  background: linear-gradient(135deg, var(--ziwei-gold-light) 0%, var(--ziwei-gold) 50%, var(--ziwei-gold-dark) 100%);\n  -webkit-background-clip: text;\n  -webkit-text-fill-color: transparent;\n  background-clip: text;\n  text-shadow: none;\n  border-bottom: 1px solid var(--ziwei-border);\n  padding-bottom: 0.4em;\n  margin-bottom: 1em;\n}\n\np {\n  font-size: 1.05rem;\n  margin-bottom: 1.1em;\n  color: var(--ziwei-text);\n}\n\nstrong {\n  color: var(--ziwei-gold-light);\n  font-weight: 600;\n}\n\nem {\n  color: var(--ziwei-text-secondary);\n  font-style: italic;\n}\n\n/* ================================================\n   STARLIGHT OVERRIDES — Navigation & Header\n   ================================================ */\n\n/* Site header background */\nheader.header {\n  background: linear-gradient(180deg, rgba(15, 13, 10, 0.98) 0%, rgba(15, 13, 10, 0.92) 100%) !important;\n  border-bottom: 1px solid var(--ziwei-border) !important;\n  backdrop-filter: blur(8px);\n}\n\n/* Site logo / title */\n.site-title {\n  font-family: var(--font-chinese) !important;\n  color: var(--ziwei-gold) !important;\n  font-weight: 700 !important;\n  letter-spacing: 0.08em !important;\n  font-size: 1.3rem !important;\n}\n\n.site-title a {\n  color: var(--ziwei-gold) !important;\n}\n\n.site-title a:hover {\n  color: var(--ziwei-gold-light) !important;\n  text-shadow: 0 0 12px rgba(201, 168, 76, 0.4);\n}\n\n/* Navigation sidebar */\n.sidebar-pane {\n  background: linear-gradient(180deg, rgba(15, 13, 10, 0.97) 0%, rgba(26, 23, 16, 0.97) 100%) !important;\n  border-right: 1px solid var(--ziwei-border) !important;\n}\n\n/* Sidebar group labels */\n.group-label {\n  font-family: var(--font-chinese) !important;\n  color: var(--ziwei-gold) !important;\n  font-weight: 600 !important;\n  letter-spacing: 0.06em !important;\n  font-size: 0.85rem !important;\n  text-transform: none !important;\n}\n\n/* Sidebar links */\na[aria-current=\"page\"] {\n  background: linear-gradient(90deg, rgba(201, 168, 76, 0.15), transparent) !important;\n  border-left: 2px solid var(--ziwei-gold) !important;\n  color: var(--ziwei-gold-light) !important;\n  font-weight: 600 !important;\n}\n\na:not([aria-current=\"page\"]):hover {\n  color: var(--ziwei-gold-light) !important;\n  background: rgba(201, 168, 76, 0.08) !important;\n}\n\n.nav-link {\n  color: var(--ziwei-text-secondary) !important;\n  font-family: var(--font-body) !important;\n}\n\n.nav-link:hover {\n  color: var(--ziwei-gold) !important;\n}\n\n/* Sidebar scrollbar */\naside::-webkit-scrollbar-track {\n  background: rgba(15, 13, 10, 0.5);\n}\naside::-webkit-scrollbar-thumb {\n  background: rgba(201, 168, 76, 0.3);\n  border-radius: 4px;\n}\naside::-webkit-scrollbar-thumb:hover {\n  background: rgba(201, 168, 76, 0.55);\n}\n\n/* ================================================\n   CONTENT AREA\n   ================================================ */\nmain.content {\n  background: transparent !important;\n}\n\narticle {\n  max-width: 780px;\n  margin: 0 auto;\n  padding: 2rem 2.5rem;\n}\n\n/* Content card / main panel */\n.sl-container {\n  background: linear-gradient(\n    135deg,\n    rgba(26, 23, 16, 0.6) 0%,\n    rgba(20, 17, 10, 0.8) 100%\n  ) !important;\n  border-radius: 4px !important;\n  border: 1px solid var(--ziwei-border) !important;\n  box-shadow:\n    0 4px 40px rgba(0, 0, 0, 0.5),\n    inset 0 1px 0 rgba(201, 168, 76, 0.08) !important;\n}\n\n/* Paper texture on content */\n.sl-markdown-content {\n  position: relative;\n}\n\n/* Traditional gold corner decorations on content area */\n.sl-markdown-content::before {\n  content: '❖';\n  position: absolute;\n  top: 1rem;\n  right: 1rem;\n  color: rgba(201, 168, 76, 0.2);\n  font-size: 1.5rem;\n  pointer-events: none;\n}\n\n/* ================================================\n   TABLES\n   ================================================ */\ntable {\n  border-collapse: collapse;\n  width: 100%;\n  margin: 1.5em 0;\n  font-size: 0.95rem;\n  border: 1px solid var(--ziwei-border);\n  border-radius: 4px;\n  overflow: hidden;\n}\n\nthead {\n  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08)) !important;\n}\n\nth {\n  font-family: var(--font-chinese);\n  color: var(--ziwei-gold) !important;\n  font-weight: 600 !important;\n  letter-spacing: 0.05em;\n  padding: 0.75rem 1rem;\n  border-bottom: 1px solid var(--ziwei-border-strong);\n  text-align: left;\n}\n\ntd {\n  padding: 0.6rem 1rem;\n  border-bottom: 1px solid rgba(201, 168, 76, 0.1);\n  color: var(--ziwei-text);\n}\n\ntr:nth-child(even) {\n  background: rgba(201, 168, 76, 0.04);\n}\n\ntr:hover {\n  background: rgba(201, 168, 76, 0.08) !important;\n}\n\n/* ================================================\n   BLOCKQUOTES — Calligraphy style\n   ================================================ */\nblockquote {\n  border-left: 3px solid var(--ziwei-gold) !important;\n  background: linear-gradient(90deg, rgba(201, 168, 76, 0.08), transparent) !important;\n  padding: 1rem 1.5rem !important;\n  margin: 1.5em 0 !important;\n  border-radius: 0 4px 4px 0;\n  font-style: italic;\n  color: var(--ziwei-text-secondary);\n  position: relative;\n}\n\nblockquote::before {\n  content: '\"';\n  font-family: var(--font-calligraphy);\n  font-size: 2.5rem;\n  color: rgba(201, 168, 76, 0.3);\n  position: absolute;\n  top: -0.3rem;\n  left: 0.5rem;\n  line-height: 1;\n}\n\nblockquote p {\n  margin: 0;\n  color: var(--ziwei-text-secondary);\n}\n\n/* ================================================\n   CODE\n   ================================================ */\ncode {\n  font-family: 'Fira Code', 'Cascadia Code', monospace;\n  background: rgba(201, 168, 76, 0.1) !important;\n  color: var(--ziwei-gold-light) !important;\n  border: 1px solid rgba(201, 168, 76, 0.2) !important;\n  border-radius: 3px;\n  padding: 0.1em 0.4em;\n  font-size: 0.88em;\n}\n\npre {\n  background: rgba(10, 8, 5, 0.95) !important;\n  border: 1px solid var(--ziwei-border) !important;\n  border-radius: 4px !important;\n  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);\n}\n\npre code {\n  background: none !important;\n  border: none !important;\n  color: #e8e0cc !important;\n}\n\n/* ================================================\n   LISTS — Traditional spacing\n   ================================================ */\nul, ol {\n  color: var(--ziwei-text);\n  padding-left: 1.5em;\n}\n\nli {\n  margin-bottom: 0.4em;\n  padding-left: 0.3em;\n}\n\nli::marker {\n  color: var(--ziwei-gold);\n}\n\nul > li::marker {\n  content: '◆ ';\n  font-size: 0.7em;\n}\n\nol > li::marker {\n  color: var(--ziwei-gold);\n  font-weight: 600;\n}\n\n/* ================================================\n   LINKS\n   ================================================ */\na {\n  color: var(--ziwei-gold) !important;\n  text-decoration: none !important;\n  border-bottom: 1px solid rgba(201, 168, 76, 0.3);\n  transition: all 0.2s ease;\n}\n\na:hover {\n  color: var(--ziwei-gold-light) !important;\n  border-bottom-color: var(--ziwei-gold-light);\n  text-shadow: 0 0 8px rgba(201, 168, 76, 0.3);\n}\n\n/* ================================================\n   BUTTONS\n   ================================================ */\nbutton, .sl-button {\n  font-family: var(--font-chinese) !important;\n  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08)) !important;\n  border: 1px solid var(--ziwei-border-strong) !important;\n  color: var(--ziwei-gold) !important;\n  border-radius: 3px !important;\n  transition: all 0.2s ease;\n}\n\nbutton:hover, .sl-button:hover {\n  background: linear-gradient(135deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.15)) !important;\n  box-shadow: 0 0 12px rgba(201, 168, 76, 0.2) !important;\n  border-color: var(--ziwei-gold) !important;\n  color: var(--ziwei-gold-light) !important;\n}\n\n/* ================================================\n   PAGE NAVIGATION (prev/next)\n   ================================================ */\n.pagination-links {\n  border-top: 1px solid var(--ziwei-border) !important;\n}\n\n.pagination-links a {\n  background: rgba(26, 23, 16, 0.6) !important;\n  border: 1px solid var(--ziwei-border) !important;\n  border-radius: 3px;\n  color: var(--ziwei-text-secondary) !important;\n  font-family: var(--font-chinese);\n  transition: all 0.2s ease;\n}\n\n.pagination-links a:hover {\n  background: rgba(201, 168, 76, 0.1) !important;\n  border-color: var(--ziwei-gold) !important;\n  color: var(--ziwei-gold) !important;\n}\n\n/* ================================================\n   SEARCH\n   ================================================ */\nsite-search button {\n  background: rgba(26, 23, 16, 0.8) !important;\n  border: 1px solid var(--ziwei-border) !important;\n  color: var(--ziwei-text-muted) !important;\n}\n\nsite-search button:hover {\n  border-color: var(--ziwei-gold) !important;\n  color: var(--ziwei-gold) !important;\n}\n\n/* ================================================\n   FOOTER\n   ================================================ */\nfooter {\n  border-top: 1px solid var(--ziwei-border) !important;\n  background: rgba(15, 13, 10, 0.8) !important;\n  color: var(--ziwei-text-muted) !important;\n  font-family: var(--font-body);\n}\n\nfooter a {\n  color: var(--ziwei-text-muted) !important;\n  border-bottom: none !important;\n}\n\nfooter a:hover {\n  color: var(--ziwei-gold) !important;\n}\n\n/* ================================================\n   TABLE OF CONTENTS (right sidebar)\n   ================================================ */\nstarlight-toc nav {\n  background: rgba(26, 23, 16, 0.5) !important;\n  border-left: 1px solid var(--ziwei-border) !important;\n  border-radius: 4px;\n  padding: 1rem;\n}\n\nstarlight-toc a {\n  color: var(--ziwei-text-muted) !important;\n  font-size: 0.88rem;\n  border-bottom: none !important;\n}\n\nstarlight-toc a:hover,\nstarlight-toc a[aria-current=\"true\"] {\n  color: var(--ziwei-gold) !important;\n}\n\n/* ================================================\n   RESPONSIVE\n   ================================================ */\n@media (max-width: 768px) {\n  h1, .sl-markdown-content h1:first-child {\n    font-size: 1.8rem;\n  }\n\n  article {\n    padding: 1.5rem 1rem;\n  }\n\n  .site-title {\n    font-size: 1.1rem !important;\n  }\n}\n\n/* ================================================\n   SPECIAL — Calligraphy accent for homepage\n   ================================================ */\n.home-intro-calligraphy {\n  font-family: var(--font-calligraphy);\n  font-size: 2.5rem;\n  color: rgba(201, 168, 76, 0.4);\n  text-align: center;\n  letter-spacing: 0.3em;\n  margin: 1rem 0 2rem;\n  line-height: 1.2;\n}\n\n/* Decorative divider */\n.traditional-divider {\n  display: flex;\n  align-items: center;\n  gap: 1rem;\n  margin: 2rem 0;\n  color: var(--ziwei-gold-dark);\n  font-size: 0.9rem;\n  opacity: 0.6;\n}\n\n.traditional-divider::before,\n.traditional-divider::after {\n  content: '';\n  flex: 1;\n  height: 1px;\n  background: linear-gradient(90deg, transparent, var(--ziwei-gold-dark), transparent);\n}\n\n/* Star card grid for homepage */\n.star-grid {\n  display: grid;\n  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));\n  gap: 1rem;\n  margin: 1.5rem 0;\n}\n\n.star-card {\n  background: var(--ziwei-bg-card);\n  border: 1px solid var(--ziwei-border);\n  border-radius: 4px;\n  padding: 1rem 1.25rem;\n  transition: all 0.25s ease;\n  cursor: pointer;\n  text-decoration: none;\n  display: block;\n  color: var(--ziwei-text) !important;\n  border-bottom: none !important;\n}\n\n.star-card:hover {\n  background: var(--ziwei-bg-card-hover);\n  border-color: var(--ziwei-gold);\n  transform: translateY(-2px);\n  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.15);\n  color: var(--ziwei-gold-light) !important;\n}\n\n.star-card .star-chinese {\n  font-family: var(--font-chinese);\n  font-size: 1.4rem;\n  font-weight: 700;\n  color: var(--ziwei-gold);\n  display: block;\n  margin-bottom: 0.25rem;\n}\n\n.star-card .star-english {\n  font-size: 0.88rem;\n  color: var(--ziwei-text-muted);\n  display: block;\n}\n\n.star-card .star-desc {\n  font-size: 0.8rem;\n  color: var(--ziwei-text-secondary);\n  margin-top: 0.4rem;\n  display: block;\n}\n\n/* palace card */\n.palace-card {\n  background: var(--ziwei-bg-card);\n  border: 1px solid var(--ziwei-border);\n  border-radius: 4px;\n  padding: 0.85rem 1rem;\n  transition: all 0.25s ease;\n  cursor: pointer;\n  text-decoration: none;\n  display: flex;\n  align-items: center;\n  gap: 0.75rem;\n  color: var(--ziwei-text) !important;\n  border-bottom: none !important;\n  margin-bottom: 0.5rem;\n}\n\n.palace-card:hover {\n  background: var(--ziwei-bg-card-hover);\n  border-color: var(--ziwei-gold);\n  transform: translateX(4px);\n  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.12);\n  color: var(--ziwei-gold-light) !important;\n}\n\n.palace-card .palace-icon {\n  font-size: 1.2rem;\n  width: 32px;\n  height: 32px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  background: rgba(201, 168, 76, 0.1);\n  border: 1px solid rgba(201, 168, 76, 0.2);\n  border-radius: 50%;\n  flex-shrink: 0;\n}\n\n.palace-card .palace-name {\n  font-family: var(--font-chinese);\n  font-size: 0.95rem;\n  font-weight: 600;\n  color: var(--ziwei-text);\n}\n\n.palace-card:hover .palace-name {\n  color: var(--ziwei-gold-light);\n}\n\n/* Hero banner on homepage */\n.hero-banner {\n  text-align: center;\n  padding: 2.5rem 1.5rem;\n  background: linear-gradient(135deg, rgba(26, 23, 16, 0.7), rgba(15, 13, 10, 0.9));\n  border: 1px solid var(--ziwei-border);\n  border-radius: 6px;\n  margin-bottom: 2rem;\n  position: relative;\n  overflow: hidden;\n}\n\n.hero-banner::before {\n  content: '';\n  position: absolute;\n  inset: 0;\n  background:\n    radial-gradient(ellipse at 50% 0%, rgba(201, 168, 76, 0.12) 0%, transparent 60%);\n  pointer-events: none;\n}\n\n.hero-banner .hero-title {\n  font-family: var(--font-chinese);\n  font-size: 2.2rem;\n  font-weight: 700;\n  color: var(--ziwei-gold);\n  margin-bottom: 0.5rem;\n  letter-spacing: 0.1em;\n}\n\n.hero-banner .hero-subtitle {\n  font-family: var(--font-calligraphy);\n  font-size: 1.4rem;\n  color: rgba(201, 168, 76, 0.5);\n  margin-bottom: 1rem;\n  letter-spacing: 0.2em;\n}\n\n.hero-banner .hero-desc {\n  color: var(--ziwei-text-secondary);\n  font-size: 1rem;\n  max-width: 600px;\n  margin: 0 auto 1.5rem;\n}\n\n/* Selection */\n::selection {\n  background: rgba(201, 168, 76, 0.25);\n  color: var(--ziwei-gold-light);\n}\n\n/* Scrollbar */\n::-webkit-scrollbar {\n  width: 8px;\n  height: 8px;\n}\n::-webkit-scrollbar-track {\n  background: rgba(15, 13, 10, 0.5);\n}\n::-webkit-scrollbar-thumb {\n  background: rgba(201, 168, 76, 0.3);\n  border-radius: 4px;\n}\n::-webkit-scrollbar-thumb:hover {\n  background: rgba(201, 168, 76, 0.55);\n}\n\n/* Focus states */\n:focus-visible {\n  outline: 2px solid var(--ziwei-gold);\n  outline-offset: 2px;\n  border-radius: 2px;\n}\n
+/* ================================================
+   Zi Wei Dou Shu Guide — Chinese Traditional Aesthetic
+   紫微斗数 · 传统美学增强包
+   ================================================ */
+
+/* --- Google Fonts: Chinese Serif + Calligraphy --- */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap');
+
+/* ================================================
+   CSS VARIABLES — Imperial Color Palette
+   ================================================ */
+:root {
+  /* Primary: Imperial Gold */
+  --ziwei-gold: #c9a84c;
+  --ziwei-gold-light: #e8c96e;
+  --ziwei-gold-dark: #9a7a2a;
+
+  /* Secondary: Deep Crimson (宫墙红) */
+  --ziwei-red: #8b1a1a;
+  --ziwei-red-light: #c0392b;
+  --ziwei-red-dark: #5c0f0f;
+
+  /* Accent: Royal Blue (帝王蓝) */
+  --ziwei-blue: #1a2d5a;
+  --ziwei-blue-light: #2a4080;
+
+  /* Background layers */
+  --ziwei-bg: #0f0d0a;
+  --ziwei-bg-secondary: #1a1710;
+  --ziwei-bg-card: rgba(30, 25, 15, 0.85);
+  --ziwei-bg-card-hover: rgba(45, 38, 20, 0.95);
+
+  /* Text */
+  --ziwei-text: #e8e0cc;
+  --ziwei-text-secondary: #b8a888;
+  --ziwei-text-muted: #7a6a50;
+
+  /* Borders */
+  --ziwei-border: rgba(201, 168, 76, 0.25);
+  --ziwei-border-strong: rgba(201, 168, 76, 0.55);
+
+  /* Fonts */
+  --font-chinese: 'Noto Serif SC', 'STSong', 'SimSun', serif;
+  --font-calligraphy: 'Ma Shan Zheng', 'ZCOOL XiaoWei', cursive;
+  --font-body: 'Noto Serif SC', Georgia, serif;
+}
+
+/* ================================================
+   GLOBAL — Body & Background
+   ================================================ */
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--ziwei-bg);
+  color: var(--ziwei-text);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+}
+
+/* Animated starfield background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(26, 45, 90, 0.35) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(139, 26, 26, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(201, 168, 76, 0.08) 0%, transparent 55%),
+    radial-gradient(1px 1px at 15% 35%, rgba(201, 168, 76, 0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 42% 72%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 67% 18%, rgba(201, 168, 76, 0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 83% 58%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 85%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 45%, rgba(201, 168, 76, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 92%, rgba(201, 168, 76, 0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 30%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 55%, rgba(201, 168, 76, 0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 10%, rgba(201, 168, 76, 0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 65%, rgba(201, 168, 76, 0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 42%, rgba(201, 168, 76, 0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Noise texture overlay */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ================================================
+   TYPOGRAPHY
+   ================================================ */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-chinese);
+  color: var(--ziwei-gold);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+h2 {
+  position: relative;
+  padding-bottom: 0.5em;
+  margin-top: 2em;
+  margin-bottom: 0.8em;
+  font-size: 1.5rem;
+  color: var(--ziwei-gold);
+}
+
+h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--ziwei-gold), transparent);
+  border-bottom: 1px solid var(--ziwei-gold-dark);
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: var(--ziwei-gold-light);
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+.sl-markdown-content h1:first-child {
+  font-family: var(--font-chinese);
+  font-size: 2.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--ziwei-gold-light) 0%, var(--ziwei-gold) 50%, var(--ziwei-gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  border-bottom: 1px solid var(--ziwei-border);
+  padding-bottom: 0.4em;
+  margin-bottom: 1em;
+}
+
+p {
+  font-size: 1.05rem;
+  margin-bottom: 1.1em;
+  color: var(--ziwei-text);
+}
+
+strong { color: var(--ziwei-gold-light); font-weight: 600; }
+em { color: var(--ziwei-text-secondary); font-style: italic; }
+
+/* ================================================
+   STARLIGHT — Navigation & Header
+   ================================================ */
+header.header {
+  background: linear-gradient(180deg, rgba(15, 13, 10, 0.98) 0%, rgba(15, 13, 10, 0.92) 100%) !important;
+  border-bottom: 1px solid var(--ziwei-border) !important;
+  backdrop-filter: blur(8px);
+}
+
+.site-title {
+  font-family: var(--font-chinese) !important;
+  color: var(--ziwei-gold) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  font-size: 1.3rem !important;
+}
+
+.site-title a { color: var(--ziwei-gold) !important; }
+.site-title a:hover {
+  color: var(--ziwei-gold-light) !important;
+  text-shadow: 0 0 12px rgba(201, 168, 76, 0.4);
+}
+
+.sidebar-pane {
+  background: linear-gradient(180deg, rgba(15, 13, 10, 0.97) 0%, rgba(26, 23, 16, 0.97) 100%) !important;
+  border-right: 1px solid var(--ziwei-border) !important;
+}
+
+.group-label {
+  font-family: var(--font-chinese) !important;
+  color: var(--ziwei-gold) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.06em !important;
+  font-size: 0.85rem !important;
+  text-transform: none !important;
+}
+
+a[aria-current="page"] {
+  background: linear-gradient(90deg, rgba(201, 168, 76, 0.15), transparent) !important;
+  border-left: 2px solid var(--ziwei-gold) !important;
+  color: var(--ziwei-gold-light) !important;
+  font-weight: 600 !important;
+}
+
+a:not([aria-current="page"]):hover {
+  color: var(--ziwei-gold-light) !important;
+  background: rgba(201, 168, 76, 0.08) !important;
+}
+
+.nav-link {
+  color: var(--ziwei-text-secondary) !important;
+  font-family: var(--font-body) !important;
+}
+
+.nav-link:hover { color: var(--ziwei-gold) !important; }
+
+aside::-webkit-scrollbar-track { background: rgba(15, 13, 10, 0.5); }
+aside::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 4px; }
+aside::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.55); }
+
+/* ================================================
+   CONTENT AREA
+   ================================================ */
+main.content { background: transparent !important; }
+
+article {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem;
+}
+
+.sl-container {
+  background: linear-gradient(135deg, rgba(26, 23, 16, 0.6) 0%, rgba(20, 17, 10, 0.8) 100%) !important;
+  border-radius: 4px !important;
+  border: 1px solid var(--ziwei-border) !important;
+  box-shadow: 0 4px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.08) !important;
+}
+
+.sl-markdown-content { position: relative; }
+
+.sl-markdown-content::before {
+  content: '\2756';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  color: rgba(201, 168, 76, 0.2);
+  font-size: 1.5rem;
+  pointer-events: none;
+}
+
+/* ================================================
+   TABLES
+   ================================================ */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5em 0;
+  font-size: 0.95rem;
+  border: 1px solid var(--ziwei-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+thead { background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08)) !important; }
+
+th {
+  font-family: var(--font-chinese);
+  color: var(--ziwei-gold) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--ziwei-border-strong);
+  text-align: left;
+}
+
+td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+  color: var(--ziwei-text);
+}
+
+tr:nth-child(even) { background: rgba(201, 168, 76, 0.04); }
+tr:hover { background: rgba(201, 168, 76, 0.08) !important; }
+
+/* ================================================
+   BLOCKQUOTES
+   ================================================ */
+blockquote {
+  border-left: 3px solid var(--ziwei-gold) !important;
+  background: linear-gradient(90deg, rgba(201, 168, 76, 0.08), transparent) !important;
+  padding: 1rem 1.5rem !important;
+  margin: 1.5em 0 !important;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+  color: var(--ziwei-text-secondary);
+  position: relative;
+}
+
+blockquote::before {
+  content: '"';
+  font-family: var(--font-calligraphy);
+  font-size: 2.5rem;
+  color: rgba(201, 168, 76, 0.3);
+  position: absolute;
+  top: -0.3rem;
+  left: 0.5rem;
+  line-height: 1;
+}
+
+blockquote p { margin: 0; color: var(--ziwei-text-secondary); }
+
+/* ================================================
+   CODE
+   ================================================ */
+code {
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  background: rgba(201, 168, 76, 0.1) !important;
+  color: var(--ziwei-gold-light) !important;
+  border: 1px solid rgba(201, 168, 76, 0.2) !important;
+  border-radius: 3px;
+  padding: 0.1em 0.4em;
+  font-size: 0.88em;
+}
+
+pre {
+  background: rgba(10, 8, 5, 0.95) !important;
+  border: 1px solid var(--ziwei-border) !important;
+  border-radius: 4px !important;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+pre code { background: none !important; border: none !important; color: #e8e0cc !important; }
+
+/* ================================================
+   LISTS
+   ================================================ */
+ul, ol { color: var(--ziwei-text); padding-left: 1.5em; }
+li { margin-bottom: 0.4em; padding-left: 0.3em; }
+li::marker { color: var(--ziwei-gold); }
+ul > li::marker { content: '◆ '; font-size: 0.7em; }
+ol > li::marker { color: var(--ziwei-gold); font-weight: 600; }
+
+/* ================================================
+   LINKS
+   ================================================ */
+a {
+  color: var(--ziwei-gold) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3);
+  transition: all 0.2s ease;
+}
+
+a:hover {
+  color: var(--ziwei-gold-light) !important;
+  border-bottom-color: var(--ziwei-gold-light);
+  text-shadow: 0 0 8px rgba(201, 168, 76, 0.3);
+}
+
+/* ================================================
+   BUTTONS
+   ================================================ */
+button, .sl-button {
+  font-family: var(--font-chinese) !important;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.08)) !important;
+  border: 1px solid var(--ziwei-border-strong) !important;
+  color: var(--ziwei-gold) !important;
+  border-radius: 3px !important;
+  transition: all 0.2s ease;
+}
+
+button:hover, .sl-button:hover {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.15)) !important;
+  box-shadow: 0 0 12px rgba(201, 168, 76, 0.2) !important;
+  border-color: var(--ziwei-gold) !important;
+  color: var(--ziwei-gold-light) !important;
+}
+
+/* ================================================
+   PAGE NAVIGATION
+   ================================================ */
+.pagination-links { border-top: 1px solid var(--ziwei-border) !important; }
+.pagination-links a {
+  background: rgba(26, 23, 16, 0.6) !important;
+  border: 1px solid var(--ziwei-border) !important;
+  border-radius: 3px;
+  color: var(--ziwei-text-secondary) !important;
+  font-family: var(--font-chinese);
+  transition: all 0.2s ease;
+}
+.pagination-links a:hover {
+  background: rgba(201, 168, 76, 0.1) !important;
+  border-color: var(--ziwei-gold) !important;
+  color: var(--ziwei-gold) !important;
+}
+
+/* ================================================
+   SEARCH
+   ================================================ */
+site-search button {
+  background: rgba(26, 23, 16, 0.8) !important;
+  border: 1px solid var(--ziwei-border) !important;
+  color: var(--ziwei-text-muted) !important;
+}
+site-search button:hover {
+  border-color: var(--ziwei-gold) !important;
+  color: var(--ziwei-gold) !important;
+}
+
+/* ================================================
+   FOOTER
+   ================================================ */
+footer {
+  border-top: 1px solid var(--ziwei-border) !important;
+  background: rgba(15, 13, 10, 0.8) !important;
+  color: var(--ziwei-text-muted) !important;
+  font-family: var(--font-body);
+}
+footer a { color: var(--ziwei-text-muted) !important; border-bottom: none !important; }
+footer a:hover { color: var(--ziwei-gold) !important; }
+
+/* ================================================
+   TABLE OF CONTENTS
+   ================================================ */
+starlight-toc nav {
+  background: rgba(26, 23, 16, 0.5) !important;
+  border-left: 1px solid var(--ziwei-border) !important;
+  border-radius: 4px;
+  padding: 1rem;
+}
+starlight-toc a { color: var(--ziwei-text-muted) !important; font-size: 0.88rem; border-bottom: none !important; }
+starlight-toc a:hover, starlight-toc a[aria-current="true"] { color: var(--ziwei-gold) !important; }
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 768px) {
+  h1, .sl-markdown-content h1:first-child { font-size: 1.8rem; }
+  article { padding: 1.5rem 1rem; }
+  .site-title { font-size: 1.1rem !important; }
+}
+
+/* ================================================
+   HOMEPAGE — Splash Page
+   ================================================ */
+.home-calligraphy {
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 2.8rem;
+  text-align: center;
+  color: rgba(201, 168, 76, 0.35);
+  letter-spacing: 0.5em;
+  margin: 0.5rem 0 1.5rem;
+  line-height: 1.2;
+}
+
+.home-intro {
+  max-width: 680px;
+  margin: 0 auto 1.5rem;
+  text-align: center;
+}
+
+.home-intro p {
+  font-size: 1.08rem;
+  color: #b8a888;
+  line-height: 1.9;
+  margin-bottom: 0.8em;
+}
+
+/* Star grid */
+.star-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin: 1.5rem auto;
+  max-width: 900px;
+}
+
+.star-card {
+  background: var(--ziwei-bg-card);
+  border: 1px solid var(--ziwei-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  color: var(--ziwei-text) !important;
+  border-bottom: none !important;
+}
+
+.star-card:hover {
+  background: var(--ziwei-bg-card-hover);
+  border-color: var(--ziwei-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.15);
+  color: var(--ziwei-gold-light) !important;
+}
+
+.star-card .star-chinese {
+  font-family: var(--font-chinese);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ziwei-gold);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.star-card .star-english {
+  font-size: 0.88rem;
+  color: var(--ziwei-text-muted);
+  display: block;
+}
+
+.star-card .star-desc {
+  font-size: 0.8rem;
+  color: var(--ziwei-text-secondary);
+  margin-top: 0.4rem;
+  display: block;
+}
+
+/* Palace card */
+.palace-card {
+  background: var(--ziwei-bg-card);
+  border: 1px solid var(--ziwei-border);
+  border-radius: 4px;
+  padding: 0.85rem 1rem;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--ziwei-text) !important;
+  border-bottom: none !important;
+  margin-bottom: 0.5rem;
+}
+
+.palace-card:hover {
+  background: var(--ziwei-bg-card-hover);
+  border-color: var(--ziwei-gold);
+  transform: translateX(4px);
+  box-shadow: 0 2px 12px rgba(201, 168, 76, 0.12);
+  color: var(--ziwei-gold-light) !important;
+}
+
+.palace-card .palace-icon {
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.palace-card .palace-name {
+  font-family: var(--font-chinese);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ziwei-text);
+}
+
+.palace-card:hover .palace-name { color: var(--ziwei-gold-light); }
+
+/* Divider */
+.traditional-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 900px;
+  color: var(--ziwei-gold-dark);
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+
+.traditional-divider::before,
+.traditional-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ziwei-gold-dark), transparent);
+}
+
+/* CTA section */
+.chart-cta-section {
+  max-width: 560px;
+  margin: 2rem auto;
+}
+
+.chart-cta-box {
+  background: linear-gradient(145deg, rgba(22, 18, 10, 0.95), rgba(15, 12, 7, 0.98));
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(201, 168, 76, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-cta-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.2);
+}
+
+.cta-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.chart-cta-box h3 {
+  font-family: var(--font-chinese);
+  font-size: 1.5rem;
+  color: var(--ziwei-gold);
+  margin: 0 0 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.chart-cta-box > p {
+  color: var(--ziwei-text-secondary);
+  font-size: 0.95rem;
+  margin-bottom: 1.25rem;
+}
+
+.cta-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  text-align: left;
+  display: inline-block;
+}
+
+.cta-features li {
+  color: var(--ziwei-text);
+  font-size: 0.9rem;
+  padding: 0.35rem 0;
+  letter-spacing: 0.04em;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 0.9rem 2.5rem;
+  background: linear-gradient(135deg, var(--ziwei-gold), var(--ziwei-gold-dark));
+  color: #0a0805;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  font-family: var(--font-chinese);
+  border-radius: 10px;
+  letter-spacing: 0.12em;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.3);
+}
+
+.cta-button:hover {
+  background: linear-gradient(135deg, var(--ziwei-gold-light), var(--ziwei-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.5);
+  color: #0a0805 !important;
+}
+
+/* Footer poem */
+.home-footer-poem {
+  text-align: center;
+  margin: 2.5rem auto 0;
+  padding: 1.5rem;
+  max-width: 900px;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.04), transparent);
+  border-top: 1px solid rgba(201, 168, 76, 0.12);
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+.home-footer-poem p {
+  font-family: var(--font-chinese);
+  font-size: 1.1rem;
+  color: rgba(201, 168, 76, 0.45);
+  margin: 0;
+  line-height: 1.9;
+}
+
+.home-footer-poem .poem-author {
+  font-size: 0.85rem !important;
+  margin-top: 0.5rem !important;
+  opacity: 0.7;
+}
+
+/* ================================================
+   CHART CALCULATOR — 排盘计算器 2.0
+   ================================================ */
+
+/* Wrapper: constrain width + center */
+.chart-calc-wrapper {
+  max-width: 620px;
+  margin: 2rem auto;
+}
+
+/* Card */
+.chart-calc {
+  background: linear-gradient(145deg, rgba(22, 18, 10, 0.95), rgba(15, 12, 7, 0.98));
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 16px;
+  padding: 2.5rem 2.5rem 2rem;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(201, 168, 76, 0.1);
+}
+
+/* Header: icon + title + badge */
+.calc-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.calc-icon { font-size: 1.5rem; color: #c9a84c; line-height: 1; }
+
+.calc-header h3 {
+  font-family: var(--font-chinese);
+  font-size: 1.35rem;
+  color: #c9a84c;
+  margin: 0;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+}
+
+/* Solar badge */
+.solar-note {
+  font-size: 0.7rem;
+  color: #c9a84c;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 100px;
+  padding: 0.2em 0.7em;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+/* Fields */
+.calc-fields { margin-bottom: 1.5rem; }
+
+.calc-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.calc-row:last-child { margin-bottom: 0; }
+
+.calc-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.calc-group label {
+  font-size: 0.82rem;
+  color: #9a8a6a;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  padding-left: 0.1rem;
+}
+
+.calc-group input,
+.calc-group select {
+  padding: 0.7rem 0.9rem;
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 8px;
+  background: rgba(10, 8, 5, 0.85);
+  color: #e8e0cc;
+  font-size: 0.95rem;
+  font-family: var(--font-chinese);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.calc-group input:focus,
+.calc-group select:focus {
+  outline: none;
+  border-color: rgba(201, 168, 76, 0.6);
+  box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.08);
+}
+
+.calc-group input::placeholder { color: #6a5a40; }
+.calc-group select { cursor: pointer; }
+
+.calc-group select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+  padding-right: 2.5rem;
+}
+
+/* Button */
+.calc-btn {
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, #c9a84c, #9a7830);
+  color: #0a0805;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-chinese);
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px rgba(201, 168, 76, 0.25);
+}
+
+.calc-btn:hover {
+  background: linear-gradient(135deg, #dbb85e, #c9a84c);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(201, 168, 76, 0.4);
+}
+
+.calc-btn:active { transform: translateY(0); }
+
+/* Message */
+#calc-msg {
+  text-align: center;
+  color: #e07070;
+  margin: 0.6rem 0 0;
+  font-size: 0.88rem;
+  min-height: 1.2em;
+}
+
+/* Results */
+#calc-result {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(201, 168, 76, 0.15);
+  display: none;
+}
+
+.result-divider {
+  text-align: center;
+  color: rgba(201, 168, 76, 0.4);
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  margin-bottom: 1.5rem;
+}
+
+.result-block { margin-bottom: 1.75rem; }
+
+.result-block h4 {
+  font-family: var(--font-chinese);
+  color: #c9a84c;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.8rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.12);
+}
+
+/* Summary grid */
+#calc-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem;
+}
+
+#calc-summary p {
+  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #c8beaa;
+}
+
+#calc-summary p strong {
+  color: #c9a84c;
+  display: block;
+  font-size: 0.78rem;
+  margin-bottom: 0.15rem;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+/* Palaces grid */
+#calc-palaces {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+.palace-box {
+  background: rgba(201, 168, 76, 0.05);
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  border-radius: 8px;
+  padding: 0.6rem 0.4rem;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+.palace-box.life-palace {
+  background: rgba(201, 168, 76, 0.12);
+  border-color: rgba(201, 168, 76, 0.35);
+}
+
+.palace-box strong {
+  color: #c9a84c;
+  display: block;
+  font-size: 0.82rem;
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+
+.palace-box .stars { color: #9a8a70; font-size: 0.78rem; line-height: 1.4; }
+
+/* Year items */
+.year-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.07);
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+.year-item:hover { background: rgba(201, 168, 76, 0.04); }
+.year-item:last-child { border-bottom: none; }
+.year-item strong { color: #c9a84c; font-size: 0.9rem; font-weight: 600; }
+.year-item span { color: #9a8a70; font-size: 0.85rem; }
+
+/* ================================================
+   MISC
+   ================================================ */
+::selection { background: rgba(201, 168, 76, 0.25); color: var(--ziwei-gold-light); }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: rgba(15, 13, 10, 0.5); }
+::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(201, 168, 76, 0.55); }
+
+:focus-visible {
+  outline: 2px solid var(--ziwei-gold);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ================================================
+   RESPONSIVE
+   ================================================ */
+@media (max-width: 600px) {
+  .chart-calc { padding: 1.5rem 1.25rem; }
+  .calc-row { flex-direction: column; }
+  #calc-palaces { grid-template-columns: repeat(3, 1fr); }
+  #calc-summary { grid-template-columns: 1fr; }
+  .star-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ================================================
+   ZIWEI CHART GRID - 十二宫命盘图
+   ================================================ */
+.ziwei-chart {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 1rem;
+  aspect-ratio: 4/3;
+}
+
+.palace-cell {
+  background: rgba(20, 17, 12, 0.95);
+  padding: 0.6rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.palace-cell:hover {
+  background: rgba(35, 30, 20, 0.95);
+}
+
+.palace-cell.ming-gong {
+  background: rgba(201, 168, 76, 0.15);
+  border: 2px solid rgba(201, 168, 76, 0.5);
+}
+
+.palace-cell.shen-gong {
+  background: rgba(139, 26, 26, 0.12);
+  border: 2px solid rgba(139, 26, 26, 0.35);
+}
+
+.palace-cell.ming-gong.shen-gong {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 50%, rgba(139, 26, 26, 0.12) 50%);
+  border: 2px solid rgba(201, 168, 76, 0.6);
+}
+
+.palace-title {
+  font-size: 0.72rem;
+  color: #c9a84c;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.15rem;
+}
+
+.palace-zhi {
+  font-size: 0.65rem;
+  color: #8a7a60;
+  margin-bottom: 0.2rem;
+}
+
+.palace-stars {
+  font-size: 0.68rem;
+  color: #e8dca8;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.palace-tag {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 0.55rem;
+  background: rgba(201, 168, 76, 0.6);
+  color: #1a1710;
+  padding: 0.08rem 0.25rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.palace-tag.shen {
+  background: rgba(139, 26, 26, 0.7);
+  color: #f0e0c0;
+}
+
+/* ================================================
+   DA YUN LIST - 大运流年
+   ================================================ */
+.dayun-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.dayun-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0.4rem;
+  background: rgba(30, 25, 15, 0.7);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.dayun-item:hover {
+  background: rgba(40, 35, 20, 0.8);
+  border-color: rgba(201, 168, 76, 0.3);
+}
+
+.dayun-item.current {
+  background: rgba(201, 168, 76, 0.18);
+  border-color: rgba(201, 168, 76, 0.5);
+}
+
+.dy-period {
+  font-size: 0.82rem;
+  color: #c9a84c;
+  font-weight: 600;
+}
+
+.dy-pos {
+  font-size: 0.72rem;
+  color: #9a8a70;
+  margin-top: 0.15rem;
+}
+
+.dy-tag {
+  font-size: 0.6rem;
+  background: rgba(201, 168, 76, 0.5);
+  color: #1a1710;
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  margin-top: 0.25rem;
+  font-weight: 700;
+}
+
+/* ================================================
+   FORTUNE SECTIONS - 流年运势详解
+   ================================================ */
+.fortune-section {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(25, 20, 12, 0.5);
+  border-radius: 8px;
+  border-left: 3px solid rgba(201, 168, 76, 0.4);
+}
+
+.fortune-section.current-year {
+  background: rgba(201, 168, 76, 0.08);
+  border-left-color: #c9a84c;
+}
+
+.fortune-section h4 {
+  color: #c9a84c;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.fortune-year {
+  padding: 0.7rem 0.8rem;
+  margin-bottom: 0.6rem;
+  background: rgba(20, 17, 12, 0.6);
+  border-radius: 6px;
+  border: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.fortune-year:last-child {
+  margin-bottom: 0;
+}
+
+.fortune-year strong {
+  color: #e8dca8;
+  font-size: 0.88rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+.fortune-year p {
+  color: #b8a888;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ================================================
+   RESPONSIVE CHART
+   ================================================ */
+/* ================================================
+   EVENT YEAR - 年度事件展示
+   ================================================ */
+.event-year {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: rgba(25, 20, 12, 0.5);
+  border-radius: 8px;
+  border: 1px solid rgba(201, 168, 76, 0.15);
+}
+
+.event-year.past {
+  border-left: 3px solid rgba(139, 26, 26, 0.5);
+}
+
+.event-year.future {
+  border-left: 3px solid rgba(26, 45, 90, 0.6);
+}
+
+.event-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+}
+
+.event-year-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e8dca8;
+}
+
+.event-ganzhi {
+  font-size: 0.85rem;
+  color: #c9a84c;
+  padding: 0.15rem 0.5rem;
+  background: rgba(201, 168, 76, 0.15);
+  border-radius: 4px;
+}
+
+.event-age {
+  font-size: 0.78rem;
+  color: #9a8a70;
+  margin-left: auto;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.event-item {
+  padding: 0.6rem 0.8rem;
+  background: rgba(15, 13, 10, 0.6);
+  border-radius: 6px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #d8c8a8;
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.event-item:hover {
+  background: rgba(25, 22, 15, 0.8);
+  border-left-color: rgba(201, 168, 76, 0.4);
+}
+
+/* 四化事件高亮 */
+.event-item:has([data-hua="lu"]),
+.event-item:contains("化禄") {
+  border-left-color: #4a9;
+}
+
+.event-item:has([data-hua="quan"]),
+.event-item:contains("化权") {
+  border-left-color: #c84;
+}
+
+.event-item:has([data-hua="ke"]),
+.event-item:contains("化科") {
+  border-left-color: #48c;
+}
+
+.event-item:has([data-hua="ji"]),
+.event-item:contains("化忌") {
+  border-left-color: #c44;
+  background: rgba(60, 20, 20, 0.3);
+}
+
+/* 过去事件特殊样式 */
+.event-year.past .event-item {
+  opacity: 0.9;
+}
+
+.event-year.past .event-item::before {
+  content: "✓ ";
+  color: #6a8a6a;
+}
+
+/* 未来事件特殊样式 */
+.event-year.future .event-item::before {
+  content: "→ ";
+  color: #8a8a6a;
+}
+
+@media (max-width: 600px) {
+  .ziwei-chart {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+  
+  .dayun-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .palace-title { font-size: 0.65rem; }
+  .palace-stars { font-size: 0.6rem; }
+  
+  .event-header {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  
+  .event-year-label { font-size: 1rem; }
+  .event-item { font-size: 0.8rem; padding: 0.5rem 0.6rem; }
+}
+
+/* ================================================
+   SI HUA GRID - 生年四化展示
+   ================================================ */
+.sihua-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.sihua-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.8rem 0.5rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.sihua-item.lu {
+  background: rgba(74, 153, 102, 0.15);
+  border: 1px solid rgba(74, 153, 102, 0.4);
+}
+
+.sihua-item.quan {
+  background: rgba(204, 136, 68, 0.15);
+  border: 1px solid rgba(204, 136, 68, 0.4);
+}
+
+.sihua-item.ke {
+  background: rgba(68, 136, 204, 0.15);
+  border: 1px solid rgba(68, 136, 204, 0.4);
+}
+
+.sihua-item.ji {
+  background: rgba(204, 68, 68, 0.15);
+  border: 1px solid rgba(204, 68, 68, 0.4);
+}
+
+.sihua-star {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #e8dca8;
+}
+
+.sihua-label {
+  font-size: 0.72rem;
+  color: #9a8a70;
+  margin: 0.25rem 0;
+}
+
+.sihua-palace {
+  font-size: 0.78rem;
+  color: #c9a84c;
+}
+
+/* ================================================
+   PALACE GAN - 宫位天干
+   ================================================ */
+.palace-gan {
+  font-size: 0.6rem;
+  color: #8a7a60;
+  margin-bottom: 0.15rem;
+  opacity: 0.8;
+}
+
+.dy-gan {
+  font-size: 0.65rem;
+  color: #8a7a60;
+  margin-top: 0.1rem;
+}
+
+@media (max-width: 600px) {
+  .sihua-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .event-summary {
+    flex-wrap: wrap;
+  }
+  
+  .event-tag {
+    font-size: 0.75rem;
+  }
+  
+  .event-details p {
+    font-size: 0.8rem;
+  }
+}
+
+/* ================================================
+   EVENT SUMMARY & DETAILS - 事件摘要与详情
+   ================================================ */
+.event-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.event-tag {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #e8dca8;
+  white-space: nowrap;
+}
+
+.event-tag:contains("化禄") {
+  background: rgba(74, 153, 102, 0.15);
+  border-color: rgba(74, 153, 102, 0.35);
+  color: #8da;
+}
+
+.event-tag:contains("化权") {
+  background: rgba(204, 136, 68, 0.15);
+  border-color: rgba(204, 136, 68, 0.35);
+  color: #da8;
+}
+
+.event-tag:contains("化科") {
+  background: rgba(68, 136, 204, 0.15);
+  border-color: rgba(68, 136, 204, 0.35);
+  color: #8ad;
+}
+
+.event-tag:contains("化忌") {
+  background: rgba(204, 68, 68, 0.15);
+  border-color: rgba(204, 68, 68, 0.35);
+  color: #d88;
+}
+
+.event-details {
+  padding: 0.8rem;
+  background: rgba(20, 17, 12, 0.5);
+  border-radius: 6px;
+  border-left: 2px solid rgba(201, 168, 76, 0.3);
+}
+
+.event-details p {
+  margin: 0 0 0.6rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.08);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #b8a888;
+}
+
+.event-details p:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.event-details p strong {
+  color: #c9a84c;
+}
+
+/* 过去事件样式 */
+.event-year.past .event-details {
+  border-left-color: rgba(139, 26, 26, 0.35);
+}
+
+.event-year.past .event-details p {
+  color: #a89878;
+}
+
+/* 未来事件样式 */
+.event-year.future .event-details {
+  border-left-color: rgba(26, 45, 90, 0.35);
+}
+
+.event-year.future .event-details p {
+  color: #a8b898;
+}
+
+/* ================================================
+   COMMUNITY - 社区板块
+   ================================================ */
+
+/* 首页社区入口横幅 */
+.community-section {
+  margin: 2.5rem 0;
+}
+
+.community-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 2rem 2.5rem;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.08) 0%, rgba(26, 45, 90, 0.12) 50%, rgba(139, 26, 26, 0.08) 100%);
+  border: 1px solid rgba(201, 168, 76, 0.15);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.community-banner::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(ellipse at center, rgba(201, 168, 76, 0.04) 0%, transparent 70%);
+  animation: bannerGlow 6s ease-in-out infinite;
+}
+
+@keyframes bannerGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.community-banner-icon {
+  font-size: 2.5rem;
+  color: #c9a84c;
+  margin-bottom: 0.8rem;
+  font-family: 'ZCOOL XiaoWei', serif;
+  text-shadow: 0 0 20px rgba(201, 168, 76, 0.3);
+}
+
+.community-banner h3 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 1.5rem;
+  color: #e8dca8;
+  margin: 0 0 0.5rem;
+  position: relative;
+}
+
+.community-banner p {
+  color: #9a8a70;
+  font-size: 0.9rem;
+  margin: 0 0 1.2rem;
+  position: relative;
+}
+
+.community-btn {
+  display: inline-block;
+  padding: 0.6rem 2rem;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), rgba(201, 168, 76, 0.1));
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 8px;
+  color: #e8dca8;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.community-btn:hover {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.3), rgba(201, 168, 76, 0.15));
+  border-color: rgba(201, 168, 76, 0.5);
+  box-shadow: 0 4px 15px rgba(201, 168, 76, 0.15);
+  transform: translateY(-1px);
+}
+
+/* 社区页面样式 */
+.community-hero {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+
+.community-icon {
+  font-size: 3.5rem;
+  color: #c9a84c;
+  font-family: 'ZCOOL XiaoWei', serif;
+  text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+  margin-bottom: 0.8rem;
+}
+
+.community-hero h2 {
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 2rem;
+  color: #e8dca8;
+  margin: 0 0 0.5rem;
+}
+
+.community-subtitle {
+  color: #9a8a70;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+}
+
+.community-intro {
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.community-intro > p {
+  color: #b8a888;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.community-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.community-feature {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  background: var(--ziwei-bg-card);
+  border: 1px solid rgba(201, 168, 76, 0.1);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.community-feature:hover {
+  border-color: rgba(201, 168, 76, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.community-feature h4 {
+  color: #e8dca8;
+  font-size: 0.95rem;
+  margin: 0 0 0.4rem;
+}
+
+.community-feature p {
+  color: #9a8a70;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.community-notice {
+  padding: 1rem 1.5rem;
+  background: rgba(201, 168, 76, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.12);
+  border-radius: 8px;
+  margin-top: 1rem;
+}
+
+.community-notice p {
+  color: #b8a888;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.community-notice strong {
+  color: #c9a84c;
+}
+
+.community-divider {
+  text-align: center;
+  color: #9a8a70;
+  font-size: 0.85rem;
+  letter-spacing: 0.2em;
+  margin: 2rem 0 1.5rem;
+}
+
+.community-topics {
+  margin-bottom: 1rem;
+}
+
+.topic-prompt {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(26, 45, 90, 0.08);
+  border: 1px solid rgba(201, 168, 76, 0.08);
+  border-radius: 8px;
+}
+
+.topic-prompt p {
+  color: #9a8a70;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .community-features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+  
+  .community-banner {
+    padding: 1.5rem 1rem 2rem;
+  }
+  
+  .community-hero h2 {
+    font-size: 1.6rem;
+  }
+}
