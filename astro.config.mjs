@@ -1,91 +1,112 @@
-Ly8gQHRzLWNoZWNrCmltcG9ydCB7IGRlZmluZUNvbmZpZyB9IGZyb20gJ2Fz
-dHJvL2NvbmZpZyc7CmltcG9ydCBzdGFybGlnaHQgZnJvbSAnQGFzdHJvanMv
-c3RhcmxpZ2h0JzsKCi8vIGh0dHBzOi8vYXN0cm8uYnVpbGQvY29uZmlnCmV4
-cG9ydCBkZWZhdWx0IGRlZmluZUNvbmZpZyh7CglpbnRlZ3JhdGlvbnM6IFsK
-CQlzdGFybGlnaHQoewoJCQl0aXRsZTogJ+e0q+W+ruaWl+aVsCDCtyBaaSBX
-ZWkgRG91IFNodScsCgkJCWRlc2NyaXB0aW9uOiAnVGhlIGNvbXBsZXRlIGd1
-aWRlIHRvIENoaW5lc2UgZGVzdGlueSBhc3Ryb2xvZ3kg4oCUIFppIFdlaSBE
-b3UgU2h1JywKCQkJbG9nbzogewoJCQkJc3JjOiAnLi9zcmMvYXNzZXRzL2xv
-Z28uc3ZnJywKCQkJCWhyZWY6ICcvJywKCQkJfSwKCQkJZmF2aWNvbjogJy9m
-YXZpY29uLnN2ZycsCgkJCWhlYWQ6IFsKCQkJCS8vIEdvb2dsZSBGb250czog
-Q2hpbmVzZSBzZXJpZiArIGNhbGxpZ3JhcGh5CgkJCQl7CgkJCQkJdGFnOiAn
-bGluaycsCgkJCQkJYXR0cnM6IHsKCQkJCQkJcmVsOiAncHJlY29ubmVjdCcs
-CgkJCQkJCWhyZWY6ICdodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29tJywK
-CQkJCQl9LAoJCQkJfSwKCQkJCXsKCQkJCQl0YWc6ICdsaW5rJywKCQkJCQlh
-dHRyczogewoJCQkJCQlyZWw6ICdwcmVjb25uZWN0JywKCQkJCQkJaHJlZjog
-J2h0dHBzOi8vZm9udHMuZ3N0YXRpYy5jb20nLAoJCQkJCQljcm9zc29yaWdp
-bjogJ2Fub255bW91cycsCgkJCQkJfSwKCQkJCX0sCgkJCQl7CgkJCQkJdGFn
-OiAnbGluaycsCgkJCQkJYXR0cnM6IHsKCQkJCQkJcmVsOiAnc3R5bGVzaGVl
-dCcsCgkJCQkJCWhyZWY6ICdodHRwczovL2ZvbnRzLmdvb2dsZWFwaXMuY29t
-L2NzczI/ZmFtaWx5PU5vdG8rU2VyaWYrU0M6d2dodEAzMDA7NDAwOzUwMDs2
-MDA7NzAwJmZhbWlseT1NYStTaGFuK1poZW5nJmZhbWlseT1aQ09PTCtYaWFv
-V2VpJmRpc3BsYXk9c3dhcCcsCgkJCQkJfSwKCQkJCX0sCgkJCV0sCgkJCWN1
-c3RvbUNzczogWycuL3NyYy9zdHlsZXMvY3VzdG9tLmNzcyddLAoJCQlzb2Np
-YWw6IFsKCQkJCXsgaWNvbjogJ2dpdGh1YicsIGxhYmVsOiAnR2l0SHViJywg
-aHJlZjogJ2h0dHBzOi8vZ2l0aHViLmNvbS9qbTYtbGFuZy96aXdlaS1zaXRl
-JyB9LAoJCQldLAoJCQlzaWRlYmFyOiBbCgkJCQl7CgkJCQkJbGFiZWw6ICdH
-ZXR0aW5nIFN0YXJ0ZWQnLAoJCQkJCWl0ZW1zOiBbCgkJCQkJCXsgbGFiZWw6
-ICdXaGF0IGlzIFppIFdlaSBEb3UgU2h1PycsIHNsdWc6ICdndWlkZXMvd2hh
-dC1pcy16aS13ZWknIH0sCgkJCQkJCXsgbGFiZWw6ICdIaXN0b3J5ICYgT3Jp
-Z2lucycsIHNsdWc6ICdndWlkZXMvaGlzdG9yeScgfSwKCQkJCQkJeyBsYWJl
-bDogJ0hvdyB0byBSZWFkIGEgQ2hhcnQnLCBzbHVnOiAnZ3VpZGVzL2hvdy10
-by1yZWFkLWNoYXJ0JyB9LAoJCQkJCV0sCgkJCQl9LAoJCQkJewoJCQkJCWxh
-YmVsOiAnQ29tbXVuaXR5IOekvuWMuuS6pOa1gScsCgkJCQkJY29sbGFwc2Vk
-OiBmYWxzZSwKCQkJCQlpdGVtczogWwoJCQkJCQl7IGxhYmVsOiAn8J+SrCDn
-pL7ljLrpppbpobUnLCBzbHVnOiAnY29tbXVuaXR5JywgbGluazogJy9jb21t
-dW5pdHkvJyB9LAoJCQkJCQl7IGxhYmVsOiAnR2l0SHViIERpc2N1c3Npb25z
-Jywgc2x1ZzogJ2dpdGh1Yi1kaXNjdXNzaW9ucycsIGxpbms6ICdodHRwczov
-L2dpdGh1Yi5jb20vam02LWxhbmcveml3ZWktc2l0ZS9kaXNjdXNzaW9ucycg
-fSwKCQkJCQldLAoJCQkJfSwKCQkJCXsKCQkJCQlsYWJlbDogJ1RoZSAxNCBN
-YWluIFN0YXJzJywKCQkJCQljb2xsYXBzZWQ6IGZhbHNlLAoJCQkJCWl0ZW1z
-OiBbCgkJCQkJCXsgbGFiZWw6ICdPdmVydmlldycsIHNsdWc6ICdzdGFycy9v
-dmVydmlldycgfSwKCQkJCQkJeyBsYWJlbDogJ1ppIFdlaSDntKvlvq4gKEVt
-cGVyb3IpJywgc2x1ZzogJ3N0YXJzL3ppLXdlaScgfSwKCQkJCQkJeyBsYWJl
-bDogJ1RpYW4gSmkg5aSp5py6IChTdHJhdGVneSknLCBzbHVnOiAnc3RhcnMv
-dGlhbi1qaScgfSwKCQkJCQkJeyBsYWJlbDogJ1RhaSBZYW5nIOWkqumYsyAo
-U3VuKScsIHNsdWc6ICdzdGFycy90YWkteWFuZycgfSwKCQkJCQkJeyBsYWJl
-bDogJ1d1IFF1IOatpuabsiAoTWlsaXRhcnkpJywgc2x1ZzogJ3N0YXJzL3d1
-LXF1JyB9LAoJCQkJCQl7IGxhYmVsOiAnTGlhbiBaaGVuIOW7iei0niAoQ2hh
-c3RpdHkpJywgc2x1ZzogJ3N0YXJzL2xpYW4temhlbicgfSwKCQkJCQkJeyBs
-YWJlbDogJ1RpYW4gVG9uZyDlpKnlkIwgKEhhcm1vbnkpJywgc2x1ZzogJ3N0
-YXJzL3RpYW4tdG9uZycgfSwKCQkJCQkJeyBsYWJlbDogJ1RpYW4gWW9uZyDl
-pKnmooEgKFN1cGVydmlzb3IpJywgc2x1ZzogJ3N0YXJzL3RpYW4teW9uZycg
-fSwKCQkJCQkJeyBsYWJlbDogJ0ppIE1lbiDlt6jpl6ggKEhpZGRlbiknLCBz
-bHVnOiAnc3RhcnMvamktbWVuJyB9LAoJCQkJCQl7IGxhYmVsOiAnTHUgQ3Vu
-IOemhOWtmCAoRm9ydHVuZSknLCBzbHVnOiAnc3RhcnMvbHUtY3VuJyB9LAoJ
-CQkJCQl7IGxhYmVsOiAnVGlhbiBLb25nIOWkqeepuiAoVm9pZCknLCBzbHVn
-OiAnc3RhcnMvdGlhbi1rb25nJyB9LAoJCQkJCQl7IGxhYmVsOiAnVGFvIEh1
-YSDmoYPoirEgKFJvbWFuY2UpJywgc2x1ZzogJ3N0YXJzL3Rhby1odWEnIH0s
-CgkJCQkJCXsgbGFiZWw6ICdadW8gRnUgJiBZb3UgQmkg5bem6L6F5Y+z5by8
-Jywgc2x1ZzogJ3N0YXJzL3p1by1mdS15b3UtYmknIH0sCgkJCQkJCXsgbGFi
-ZWw6ICdRaW5nIFlhbmcgJiBCbyBYdSDpnZLnvorljZrlo6snLCBzbHVnOiAn
-c3RhcnMvcWluZy15YW5nJyB9LAoJCQkJCV0sCgkJCQl9LAoJCQkJewoJCQkJ
-CWxhYmVsOiAnVGhlIDEyIFBhbGFjZXMnLAoJCQkJCWNvbGxhcHNlZDogZmFs
-c2UsCgkJCQkJaXRlbXM6IFsKCQkJCQkJeyBsYWJlbDogJ092ZXJ2aWV3Jywg
-c2x1ZzogJ3BhbGFjZXMvb3ZlcnZpZXcnIH0sCgkJCQkJCXsgbGFiZWw6ICdM
-aWZlIFBhbGFjZSDlkb3lrqsnLCBzbHVnOiAncGFsYWNlcy9saWZlLXBhbGFj
-ZScgfSwKCQkJCQkJeyBsYWJlbDogJ1NpYmxpbmdzIFBhbGFjZSDlhYTlvJ/l
-rqsnLCBzbHVnOiAncGFsYWNlcy9zaWJsaW5ncy1wYWxhY2UnIH0sCgkJCQkJ
-CXsgbGFiZWw6ICdQYXJlbnRzIFBhbGFjZSDniLbmr43lrqsnLCBzbHVnOiAn
-cGFsYWNlcy9wYXJlbnRzLXBhbGFjZScgfSwKCQkJCQkJeyBsYWJlbDogJ1dl
-YWx0aCBQYWxhY2Ug6LSi5bib5a6rJywgc2x1ZzogJ3BhbGFjZXMvd2VhbHRo
-LXBhbGFjZScgfSwKCQkJCQkJeyBsYWJlbDogJ0NhcmVlciBQYWxhY2Ug5a6Y
-56aE5a6rJywgc2x1ZzogJ3BhbGFjZXMvY2FyZWVyLXBhbGFjZScgfSwKCQkJ
-CQkJeyBsYWJlbDogJ0hlYWx0aCBQYWxhY2Ug55a+5Y6E5a6rJywgc2x1Zzog
-J3BhbGFjZXMvaGVhbHRoLXBhbGFjZScgfSwKCQkJCQkJeyBsYWJlbDogJ1Nw
-b3VzZSBQYWxhY2Ug5aSr5aa75a6rJywgc2x1ZzogJ3BhbGFjZXMvc3BvdXNl
-LXBhbGFjZScgfSwKCQkJCQkJeyBsYWJlbDogJ0NoaWxkcmVuIFBhbGFjZSDl
-rZDmga/lrqsnLCBzbHVnOiAncGFsYWNlcy9jaGlsZHJlbi1wYWxhY2UnIH0s
-CgkJCQkJCXsgbGFiZWw6ICdGb3J0dW5lIFBhbGFjZSDnpo/lvrflrqsnLCBz
-bHVnOiAncGFsYWNlcy9mb3J0dW5lLXBhbGFjZScgfSwKCQkJCQkJeyBsYWJl
-bDogJ01pZ3JhdGlvbiBQYWxhY2Ug6L+B56e75a6rJywgc2x1ZzogJ3BhbGFj
-ZXMvbWlncmF0aW9uLXBhbGFjZScgfSwKCQkJCQkJeyBsYWJlbDogJ1NlcnZh
-bnRzIFBhbGFjZSDku4blvbnlrqsnLCBzbHVnOiAncGFsYWNlcy9zZXJ2YW50
-cy1wYWxhY2UnIH0sCgkJCQkJXSwKCQkJCX0sCgkJCQl7CgkJCQkJbGFiZWw6
-ICdDYXNlIFN0dWRpZXMnLAoJCQkJCWl0ZW1zOiBbCgkJCQkJCXsgbGFiZWw6
-ICdDZWxlYnJpdHkgQ2hhcnRzJywgc2x1ZzogJ2Nhc2VzL2NlbGVicml0eS1j
-aGFydHMnIH0sCgkJCQkJCXsgbGFiZWw6ICcyMDI2IEZvcnR1bmUgQW5hbHlz
-aXMnLCBzbHVnOiAnY2FzZXMvMjAyNi1mb3J0dW5lJyB9LAoJCQkJCV0sCgkJ
-CQl9LAoJCQldLAoJCQlleHByZXNzaXZlQ29kZTogewoJCQkJdGhlbWVzOiBb
-J2dpdGh1Yi1kYXJrJ10sCgkJCX0sCgkJfSksCgldLAp9KTsK
+// @ts-check
+import { defineConfig } from 'astro/config';
+import starlight from '@astrojs/starlight';
 
+// https://astro.build/config
+export default defineConfig({
+	integrations: [
+		starlight({
+			title: '紫微斗数 · Zi Wei Dou Shu',
+			description: 'The complete guide to Chinese destiny astrology — Zi Wei Dou Shu',
+			logo: {
+				src: './src/assets/logo.svg',
+				href: '/',
+			},
+			favicon: '/favicon.svg',
+			head: [
+				// Google Fonts: Chinese serif + calligraphy
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'preconnect',
+						href: 'https://fonts.googleapis.com',
+					},
+				},
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'preconnect',
+						href: 'https://fonts.gstatic.com',
+						crossorigin: 'anonymous',
+					},
+				},
+				{
+					tag: 'link',
+					attrs: {
+						rel: 'stylesheet',
+						href: 'https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600;700&family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap',
+					},
+				},
+			],
+			customCss: ['./src/styles/custom.css'],
+			social: [
+				{ icon: 'github', label: 'GitHub', href: 'https://github.com/jm6-lang/ziwei-site' },
+			],
+			sidebar: [
+				{
+					label: 'Getting Started',
+					items: [
+						{ label: 'What is Zi Wei Dou Shu?', slug: 'guides/what-is-zi-wei' },
+						{ label: 'History & Origins', slug: 'guides/history' },
+						{ label: 'How to Read a Chart', slug: 'guides/how-to-read-chart' },
+					],
+				},
+				{
+					label: 'Community 社区交流',
+					collapsed: false,
+					items: [
+						{ label: '💬 GitHub Discussions', link: 'https://github.com/jm6-lang/ziwei-site/discussions' },
+					],
+				},
+				{
+					label: 'The 14 Main Stars',
+					collapsed: false,
+					items: [
+						{ label: 'Overview', slug: 'stars/overview' },
+						{ label: 'Zi Wei 紫微 (Emperor)', slug: 'stars/zi-wei' },
+						{ label: 'Tian Ji 天机 (Strategy)', slug: 'stars/tian-ji' },
+						{ label: 'Tai Yang 太阳 (Sun)', slug: 'stars/tai-yang' },
+						{ label: 'Wu Qu 武曲 (Military)', slug: 'stars/wu-qu' },
+						{ label: 'Lian Zhen 廉贞 (Chastity)', slug: 'stars/lian-zhen' },
+						{ label: 'Tian Tong 天同 (Harmony)', slug: 'stars/tian-tong' },
+						{ label: 'Tian Yong 天梁 (Supervisor)', slug: 'stars/tian-yong' },
+						{ label: 'Ji Men 巨门 (Hidden)', slug: 'stars/ji-men' },
+						{ label: 'Lu Cun 禄存 (Fortune)', slug: 'stars/lu-cun' },
+						{ label: 'Tian Kong 天空 (Void)', slug: 'stars/tian-kong' },
+						{ label: 'Tao Hua 桃花 (Romance)', slug: 'stars/tao-hua' },
+						{ label: 'Zuo Fu & You Bi 左辅右弼', slug: 'stars/zuo-fu-you-bi' },
+						{ label: 'Qing Yang & Bo Xu 青羊博士', slug: 'stars/qing-yang' },
+					],
+				},
+				{
+					label: 'The 12 Palaces',
+					collapsed: false,
+					items: [
+						{ label: 'Overview', slug: 'palaces/overview' },
+						{ label: 'Life Palace 命宫', slug: 'palaces/life-palace' },
+						{ label: 'Siblings Palace 兄弟宫', slug: 'palaces/siblings-palace' },
+						{ label: 'Parents Palace 父母宫', slug: 'palaces/parents-palace' },
+						{ label: 'Wealth Palace 财帛宫', slug: 'palaces/wealth-palace' },
+						{ label: 'Career Palace 官禄宫', slug: 'palaces/career-palace' },
+						{ label: 'Health Palace 疾厄宫', slug: 'palaces/health-palace' },
+						{ label: 'Spouse Palace 夫妻宫', slug: 'palaces/spouse-palace' },
+						{ label: 'Children Palace 子息宫', slug: 'palaces/children-palace' },
+						{ label: 'Fortune Palace 福德宫', slug: 'palaces/fortune-palace' },
+						{ label: 'Migration Palace 迁移宫', slug: 'palaces/migration-palace' },
+						{ label: 'Servants Palace 仆役宫', slug: 'palaces/servants-palace' },
+					],
+				},
+				{
+					label: 'Case Studies',
+					items: [
+						{ label: 'Celebrity Charts', slug: 'cases/celebrity-charts' },
+						{ label: '2026 Fortune Analysis', slug: 'cases/2026-fortune' },
+					],
+				},
+			],
+			expressiveCode: {
+				themes: ['github-dark'],
+			},
+		}),
+	],
+});
