@@ -1,0 +1,27 @@
+---
+// Custom Header that inlines SVG logo, bypassing Astro image pipeline
+import Default from '@astrojs/starlight/components/Header.astro';
+
+const logoSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 50" fill="none">
+  <circle cx="25" cy="25" r="20" fill="#0f0d0a" stroke="#c9a84c" stroke-width="2"/>
+  <circle cx="25" cy="25" r="15" fill="none" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+  <text x="25" y="31" font-family="serif" font-size="18" font-weight="700" fill="#c9a84c" text-anchor="middle" dominant-baseline="middle">紫</text>
+  <line x1="52" y1="10" x2="52" y2="40" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+  <text x="65" y="22" font-family="'Noto Serif SC', serif" font-size="14" font-weight="600" fill="#c9a84c" letter-spacing="2">紫微斗数</text>
+  <text x="65" y="38" font-family="Georgia, serif" font-size="10" fill="#7a6a50" letter-spacing="1">Zi Wei Dou Shu</text>
+</svg>`;
+---
+
+<a href="/" class="custom-logo" set:html={logoSvg} />
+
+<style>
+  .custom-logo {
+    display: inline-flex;
+    align-items: center;
+    height: 2.5rem;
+  }
+  .custom-logo svg {
+    height: 100%;
+    width: auto;
+  }
+</style>

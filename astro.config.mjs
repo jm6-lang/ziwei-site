@@ -8,13 +8,10 @@ export default defineConfig({
 		starlight({
 			title: '紫微斗数 · Zi Wei Dou Shu',
 			components: {
+				Logo: './src/components/SiteLogo.astro',
 				Footer: './src/components/SiteFooter.astro',
 			},
 			description: 'The complete guide to Chinese destiny astrology — Zi Wei Dou Shu',
-			logo: {
-				src: './src/assets/logo.svg',
-				href: '/',
-			},
 			favicon: '/favicon.svg',
 			head: [
 				{
