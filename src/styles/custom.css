@@ -1,4 +1,4 @@
-/* ================================================
+﻿/* ================================================
    Zi Wei Dou Shu Guide — Chinese Traditional Aesthetic
    紫微斗数 · 传统美学增强包
    ================================================ */
@@ -1586,9 +1586,13 @@ starlight-toc a:hover, starlight-toc a[aria-current="true"] { color: var(--ziwei
   margin-bottom: 2rem;
 }
 
-.community-feature {
+a.community-feature, .community-feature {
   text-align: center;
   padding: 1.5rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: all 0.2s ease;
   background: var(--ziwei-bg-card);
   border: 1px solid rgba(201, 168, 76, 0.1);
   border-radius: 10px;
@@ -1677,4 +1681,52 @@ starlight-toc a:hover, starlight-toc a[aria-current="true"] { color: var(--ziwei
   .community-hero h2 {
     font-size: 1.6rem;
   }
+}
+
+/* 社区文章卡片列表 */
+.article-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin: 1.5rem 0;
+}
+.article-card {
+  display: block;
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(201,168,76,0.25);
+  background: rgba(201,168,76,0.05);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+}
+.article-card:hover {
+  border-color: rgba(201,168,76,0.6);
+  background: rgba(201,168,76,0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(201,168,76,0.15);
+}
+.article-card h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0.4rem 0;
+  color: var(--sl-color-white);
+}
+.article-card p {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+.article-tag {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(201,168,76,0.2);
+  color: #c9a84c;
+  border: 1px solid rgba(201,168,76,0.3);
+}
+a.community-feature:hover, .community-features a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(201,168,76,0.2);
+  border-color: rgba(201,168,76,0.5);
 }
