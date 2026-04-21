@@ -1,0 +1,94 @@
+---
+// Footer override with links
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="/about">关于我们</a>
+    <span class="footer-sep">|</span>
+    <a href="/disclaimer">免责声明</a>
+    <span class="footer-sep">|</span>
+    <a href="/privacy">隐私政策</a>
+    <span class="footer-sep">|</span>
+    <a href="/contact">联系我们</a>
+    <span class="footer-sep">|</span>
+    <a href="/advertising">广告合作</a>
+  </div>
+  <div class="footer-friendlinks">
+    <span class="fl-label">友情链接：</span>
+    <a href="https://skillxm.cn" target="_blank" rel="noopener">skillxm.cn</a>
+    <a href="https://tool.skillxm.cn" target="_blank" rel="noopener">tool.skillxm.cn</a>
+    <a href="https://docs.skillxm.cn" target="_blank" rel="noopener">docs.skillxm.cn</a>
+  </div>
+  <div class="footer-copyright">
+    &copy; {currentYear} 紫微斗数 · Zi Wei Dou Shu. All rights reserved.
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--sl-color-gray-3, #e5e7eb);
+    margin-top: 3rem;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-links a {
+    color: var(--sl-color-gray-1, #374151);
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover {
+    color: var(--sl-color-text-accent, #6d28d9);
+  }
+
+  .footer-sep {
+    color: var(--sl-color-gray-4, #d1d5db);
+    font-size: 0.75rem;
+  }
+
+  .footer-friendlinks {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .fl-label {
+    color: var(--sl-color-gray-2, #6b7280);
+    font-size: 0.8rem;
+  }
+
+  .footer-friendlinks a {
+    color: var(--sl-color-gray-1, #374151);
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.2s;
+  }
+
+  .footer-friendlinks a:hover {
+    color: var(--sl-color-text-accent, #6d28d9);
+  }
+
+  .footer-copyright {
+    color: var(--sl-color-gray-4, #9ca3af);
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+  }
+</style>
