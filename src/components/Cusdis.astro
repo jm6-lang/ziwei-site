@@ -1,0 +1,29 @@
+---
+// Cusdis 轻量开源评论系统
+// APP_ID: f7a4f56b-68da-4d99-96fd-570c9b1959cb
+---
+
+<div id="cusdis_thread"></div>
+<script
+  is:inline
+  src="https://cusdis.com/js/cusdis.es.js"
+  defer
+></script>
+<script is:inline>
+  window.CUSDIS_CONFIG = {
+    host: 'https://cusdis.com',
+    appId: 'f7a4f56b-68da-4d99-96fd-570c9b1959cb',
+  };
+  var thread = document.getElementById('cusdis_thread');
+  thread.dataset.host = 'https://cusdis.com';
+  thread.dataset.appId = 'f7a4f56b-68da-4d99-96fd-570c9b1959cb';
+  thread.dataset.pageId = location.pathname;
+  thread.dataset.pageUrl = location.href;
+  thread.dataset.pageTitle = document.title;
+</script>
+
+<style>
+  #cusdis_thread {
+    min-height: 300px;
+  }
+</style>
