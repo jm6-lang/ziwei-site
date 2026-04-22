@@ -1,10 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://ziwei.skillxm.cn',
 	integrations: [
+		sitemap(),
 		starlight({
 			title: '紫微斗数 · Zi Wei Dou Shu',
 			components: {

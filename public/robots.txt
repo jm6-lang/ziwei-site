@@ -1,10 +1,10 @@
-# robots.txt for docs.skillxm.cn
+# robots.txt for ziwei.skillxm.cn
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://docs.skillxm.cn/sitemap.xml
+Sitemap: https://ziwei.skillxm.cn/sitemap.xml
 
 # Baidu specific
 User-agent: Baiduspider
