@@ -1,0 +1,15 @@
+# robots.txt for docs.skillxm.cn
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://docs.skillxm.cn/sitemap.xml
+
+# Baidu specific
+User-agent: Baiduspider
+Allow: /
+
+# Google specific
+User-agent: Googlebot
+Allow: /
