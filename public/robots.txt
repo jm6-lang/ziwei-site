@@ -4,7 +4,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://ziwei.skillxm.cn/sitemap.xml
+Sitemap: https://ziwei.skillxm.cn/sitemap-index.xml
 
 # Baidu specific
 User-agent: Baiduspider
